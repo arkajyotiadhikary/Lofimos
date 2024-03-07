@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, type Request, type Response } from "express";
 import {
       getAllSongs,
       getSongByID,
@@ -10,7 +10,9 @@ const router = Router();
 
 router.get("/songs", getAllSongs);
 router.get("/songs/:id", getSongByID);
-router.post("/songs", createSong);
+router.get("/upload", (req: Request, res: Response) => {
+      res.render("songs.view.ejs");
+}).post("/upload", createSong);
 router.put("/songs/:id", updateSong);
 router.delete("/songs/:id", deleteSong);
 
