@@ -9,11 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.testSongModel = exports.sequelize = void 0;
+exports.testSongModel = exports.userModel = exports.songModel = exports.sequelize = void 0;
 const sequelize_1 = require("sequelize");
-const Song_1 = require("./models/Song");
+const songs_model_1 = require("./models/songs.model");
 // models
-const Song_2 = require("./models/Song");
+const songs_model_2 = require("./models/songs.model");
+const users_model_1 = require("./models/users.model");
 exports.sequelize = new sequelize_1.Sequelize({
     dialect: "postgres",
     host: "localhost",
@@ -22,20 +23,21 @@ exports.sequelize = new sequelize_1.Sequelize({
     password: "test123",
     database: "harmonyxtrec",
 });
-exports.default = (0, Song_2.initSongModel)(exports.sequelize);
+exports.songModel = (0, songs_model_2.initSongModel)(exports.sequelize);
+exports.userModel = (0, users_model_1.initUserModel)(exports.sequelize);
 // some funcitons for testing
 const testSongModel = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //   sync the model with db . If table is not available it will create one
         yield exports.sequelize.sync();
         //   create a song record
-        const newSong = yield Song_1.Song.create({
+        const newSong = yield songs_model_1.Song.create({
             Title: "Test Song",
             Artist: "Test Artist",
             AudioFilePath: "/path/to/audio.mp3",
         });
         //   retrive a song by id
-        const retrivedSong = yield Song_1.Song.findByPk(newSong.SongID);
+        const retrivedSong = yield songs_model_1.Song.findByPk(newSong.SongID);
         console.log(retrivedSong);
     }
     catch (error) {

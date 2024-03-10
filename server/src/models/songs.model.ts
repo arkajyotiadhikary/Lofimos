@@ -1,4 +1,4 @@
-import { DataType, DataTypes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
 
 export class Song extends Model {
       public SongID!: number;

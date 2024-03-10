@@ -5,6 +5,7 @@ import { sequelize } from "./db";
 sequelize
       .authenticate()
       .then(() => {
+            sequelize.sync();
             console.log("Connection to the database has been established successfully.");
       })
       .catch((error: any) => {

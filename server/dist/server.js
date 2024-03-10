@@ -9,6 +9,7 @@ const db_1 = require("./db");
 db_1.sequelize
     .authenticate()
     .then(() => {
+    db_1.sequelize.sync();
     console.log("Connection to the database has been established successfully.");
 })
     .catch((error) => {

@@ -10,12 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteSong = exports.updateSong = exports.createSong = exports.getSongByID = exports.getAllSongs = void 0;
-const Song_1 = require("../models/Song");
+const songs_model_1 = require("../models/songs.model");
 // get all songs
 const getAllSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //  TODO return only first 10 songs
-        const songs = yield Song_1.Song.findAll();
+        const songs = yield songs_model_1.Song.findAll();
         res.json(songs);
     }
     catch (error) {
@@ -28,7 +28,7 @@ exports.getAllSongs = getAllSongs;
 const getSongByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const song = yield Song_1.Song.findByPk(id);
+        const song = yield songs_model_1.Song.findByPk(id);
         if (!song) {
             res.status(404).json({ message: "Song not found!" });
         }
@@ -45,7 +45,7 @@ const createSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     // get song data from body
     const songData = req.body;
     try {
-        const song = yield Song_1.Song.create(songData);
+        const song = yield songs_model_1.Song.create(songData);
         res.status(201).json(song);
     }
     catch (error) {
@@ -59,13 +59,13 @@ const updateSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { id } = req.params;
     const songData = req.body;
     try {
-        const song = Song_1.Song.findByPk(id);
+        const song = songs_model_1.Song.findByPk(id);
         if (!song) {
             res.status(404).json({ message: "Song not found" });
         }
         else {
-            yield Song_1.Song.update(songData, { where: { SongID: id } });
-            const updatedSong = Song_1.Song.findByPk(id);
+            yield songs_model_1.Song.update(songData, { where: { SongID: id } });
+            const updatedSong = songs_model_1.Song.findByPk(id);
             res.json(updatedSong);
         }
     }
@@ -79,11 +79,11 @@ exports.updateSong = updateSong;
 const deleteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const song = yield Song_1.Song.findByPk(id);
+        const song = yield songs_model_1.Song.findByPk(id);
         if (!song) {
             res.status(404).json({ message: "Song not found" });
         }
-        yield Song_1.Song.destroy({ where: { SongID: id } });
+        yield songs_model_1.Song.destroy({ where: { SongID: id } });
         res.status(204).end();
     }
     catch (error) {

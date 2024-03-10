@@ -1,4 +1,4 @@
-import { Song } from "../models/Song";
+import { Song } from "../models/songs.model";
 import { Request, Response } from "express";
 
 // get all songs

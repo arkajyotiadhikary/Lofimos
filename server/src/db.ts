@@ -1,7 +1,8 @@
 import { Sequelize } from "sequelize";
-import { Song } from "./models/Song";
+import { Song } from "./models/songs.model";
 // models
-import { initSongModel } from "./models/Song";
+import { initSongModel } from "./models/songs.model";
+import { initUserModel } from "./models/users.model";
 
 export const sequelize = new Sequelize({
       dialect: "postgres",
@@ -12,7 +13,8 @@ export const sequelize = new Sequelize({
       database: "harmonyxtrec",
 });
 
-export default initSongModel(sequelize);
+export const songModel = initSongModel(sequelize);
+export const userModel = initUserModel(sequelize);
 
 // some funcitons for testing
 export const testSongModel = async () => {

@@ -7,20 +7,19 @@ const stack = createStackNavigator();
 
 // screens
 import Home from "./screens/Home";
+import Auth from "./screens/Auth";
 
 export default function App() {
     return (
         <NavigationContainer>
             <stack.Navigator
-                initialRouteName="Home"
+                initialRouteName="Auth"
                 screenOptions={{
                     headerShown: false,
-                    headerStyle: {
-                        backgroundColor: "black",
-                    },
                 }}
             >
                 <stack.Screen name="Home" component={Home} />
+                <stack.Screen name="Auth" component={Auth} />
             </stack.Navigator>
         </NavigationContainer>
     );
