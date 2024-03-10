@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+import cors from "cors";
+
 // routes
 import songs from "./routers/songs.route";
 import auth from "./routers/auth.route";
@@ -12,6 +14,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // middleware
 app.use(express.json());
+app.use(cors());
 
 // songs api
 app.use("/api", songs);
