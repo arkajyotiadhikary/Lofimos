@@ -4,7 +4,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import styles from "../styles/Auth";
 import { type User } from "../../types";
 
-import { signUp, signIn } from "../services/authService";
+import { signUp, signIn, validateUserInput } from "../services/authService";
 
 const Auth: FC = () => {
     // a variable to check is it sign in or sign up form
@@ -27,8 +27,13 @@ const Auth: FC = () => {
 
     // method to handle submit . Check wheather you are submittin sign in form of sign up form
     const handleSubmit = (): void => {
-        if (isSignIn) signIn(formData.email, formData.password);
-        else signUp(formData.username, formData.email, formData.password);
+        const validation = validateUserInput(formData, isSignIn);
+        if (validation.isValid) {
+            if (isSignIn) signIn(formData.email, formData.password);
+            else signUp(formData.username, formData.email, formData.password);
+        } else {
+            console.log(validation.message);
+        }
     };
 
     // render form
