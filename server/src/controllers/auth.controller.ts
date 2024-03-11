@@ -2,15 +2,20 @@ import { type Request, type Response } from "express";
 import { createUser } from "./users.controller";
 import { User } from "../models/users.model";
 
+interface ResponseBody {
+      hasError: boolean;
+      userData: User;
+}
+
 // register user
 export const registerUser = async (
       req: Request,
-      res: Response<User | { message: string }>
+      res: Response<ResponseBody | { message: string }>
 ): Promise<void> => {
       const userData: Partial<User> = req.body;
       try {
             const newUser = await createUser(userData);
-            res.status(201).json(newUser);
+            res.status(201).json({ hasError: false, userData: newUser });
       } catch (error) {
             console.error("Error creating user", error);
       }

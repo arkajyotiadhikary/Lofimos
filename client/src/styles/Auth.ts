@@ -19,6 +19,13 @@ export default StyleSheet.create({
     form: {
         padding: 10,
     },
+    errBox: {
+        marginTop: 15,
+        padding: 5,
+    },
+    errBoxText: {
+        color: "red",
+    },
     inputHolder: {
         borderColor: "black",
         borderWidth: 1,

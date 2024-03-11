@@ -70,7 +70,11 @@ export const validateUserInput = (
     isLogIn: boolean
 ): ValidateUserInput => {
     // Validate if the username, email, and password are not empty
-    if (!formData.username || !formData.email || !formData.password) {
+    if (
+        !formData.username ||
+        (!formData.email && !isLogIn) ||
+        !formData.password
+    ) {
         return {
             isValid: false,
             message: "Input fields cannot be empty.",
