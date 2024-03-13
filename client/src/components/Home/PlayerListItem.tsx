@@ -20,7 +20,7 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
             <Text style={styles.itemText}>{title}</Text>
             <View style={styles.btn}>
                 <TouchableOpacity>
-                    <Foundation name="play" color="white" />
+                    <Foundation name="play" color="black" />
                 </TouchableOpacity>
             </View>
         </View>

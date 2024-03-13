@@ -4,13 +4,13 @@ export default StyleSheet.create({
     item: {
         flex: 1,
         padding: 20,
-        backgroundColor: "black",
+        backgroundColor: "white",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
     },
     itemText: {
-        color: "white",
+        color: "black",
     },
     btn: {},
 });

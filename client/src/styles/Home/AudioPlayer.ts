@@ -4,7 +4,7 @@ export default StyleSheet.create({
     btnGrp: {
         flexDirection: "row",
         justifyContent: "center",
-        backgroundColor: "black",
+        backgroundColor: "white",
     },
     btn: {
         margin: 20,

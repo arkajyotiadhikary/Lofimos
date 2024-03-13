@@ -14,7 +14,7 @@ const ButtonGroup: FC<ButtonGroupProps> = ({ play }) => {
         <View style={styles.btnGrp}>
             <View style={styles.btn}>
                 <TouchableOpacity style={styles.btnLogo}>
-                    <Foundation name="previous" size={24} color="white" />
+                    <Foundation name="previous" size={24} color="black" />
                 </TouchableOpacity>
             </View>
             <View style={styles.btn}>
@@ -22,13 +22,13 @@ const ButtonGroup: FC<ButtonGroupProps> = ({ play }) => {
                     <MaterialCommunityIcons
                         name="rewind-10"
                         size={24}
-                        color="white"
+                        color="black"
                     />
                 </TouchableOpacity>
             </View>
             <View style={styles.btn}>
                 <TouchableOpacity style={styles.btnLogo} onPress={play}>
-                    <Foundation name="play" color="white" size={30} />
+                    <Foundation name="play" color="black" size={30} />
                 </TouchableOpacity>
             </View>
             <View style={styles.btn}>
@@ -36,13 +36,13 @@ const ButtonGroup: FC<ButtonGroupProps> = ({ play }) => {
                     <MaterialCommunityIcons
                         name="fast-forward-10"
                         size={24}
-                        color="white"
+                        color="black"
                     />
                 </TouchableOpacity>
             </View>
             <View style={styles.btn}>
                 <TouchableOpacity style={styles.btnLogo}>
-                    <Foundation name="next" size={24} color="white" />
+                    <Foundation name="next" size={24} color="black" />
                 </TouchableOpacity>
             </View>
         </View>
