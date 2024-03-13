@@ -11,7 +11,7 @@ const router = Router();
 router.get("/songs", getAllSongs);
 router.get("/songs/:id", getSongByID);
 router.get("/upload", (req: Request, res: Response) => {
-      res.render("songs.view.ejs");
+      res.render("SongUploadForm.view.ejs");
 }).post("/upload", createSong);
 router.put("/songs/:id", updateSong);
 router.delete("/songs/:id", deleteSong);

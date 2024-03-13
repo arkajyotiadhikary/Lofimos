@@ -10,9 +10,10 @@ import { type Track } from "react-native-track-player";
 import ButtonGroup from "../components/Home/ButtonGroup";
 import PlayerList from "../components/Home/PlayerList";
 import SongThumbnail from "../components/Home/SongThumbnail";
+import HomeHeader from "../components/Home/HomeHeader";
 
 // style
-import styles from "../styles/Home";
+import styles from "../styles/Home/Home";
 
 const Home: FC = () => {
     const [isPlayerReady, setIsPlayerReady] = useState<boolean>(false);
@@ -33,7 +34,7 @@ const Home: FC = () => {
 
     return (
         <View style={styles.container}>
-            <SongThumbnail />
+            <HomeHeader />
             <PlayerList queue={queue} />
             <ButtonGroup play={TrackPlayer.play} />
         </View>

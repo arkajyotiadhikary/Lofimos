@@ -73,7 +73,6 @@ export const addTrack = async () => {
     await TrackPlayer.setRepeatMode(RepeatMode.Queue);
 };
 
-// TODO remote event handler
 export const playbackService = async () => {
     TrackPlayer.addEventListener(Event.RemotePause, () => {
         console.log("Event.RemotePause");

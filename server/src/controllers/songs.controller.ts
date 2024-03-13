@@ -29,7 +29,7 @@ export const getSongByID = async (req: Request, res: Response): Promise<void> =>
 // create songs
 export const createSong = async (req: Request, res: Response): Promise<void> => {
       // get song data from body
-      const songData = req.body;
+      const songData: Partial<Song> = req.body;
       try {
             const song = await Song.create(songData);
             res.status(201).json(song);

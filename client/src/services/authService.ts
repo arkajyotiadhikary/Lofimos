@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { type User } from "../../types";
 
 const BASE_URL = "http://10.0.2.2:2526";
-import { type User } from "../../types";
 
 type ValidateUserInput = {
     isValid: boolean;

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-import styles from "../../styles/PlayerListItem";
+import styles from "../../styles/Home/PlayerListItem";
 import { Foundation } from "@expo/vector-icons";
 
 interface PlayerListItemProps {

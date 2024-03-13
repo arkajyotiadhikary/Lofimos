@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import { Foundation } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import styles from "../../styles/AudioPlayer";
+import styles from "../../styles/Home/AudioPlayer";
 
 interface ButtonGroupProps {
     play: () => void;
