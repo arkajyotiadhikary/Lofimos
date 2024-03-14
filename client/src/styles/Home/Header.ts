@@ -27,7 +27,11 @@ export default StyleSheet.create({
     rightSideHeader: {
         flexDirection: "row",
     },
-    userProfile: {
+    userProfileHolder: {
         marginLeft: 15,
+        marginRight: 5,
+        borderWidth: 1,
+        borderRadius: 100,
     },
+    userProfile: {},
 });

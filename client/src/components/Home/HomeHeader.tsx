@@ -12,7 +12,7 @@ const HomeHeader: FC = () => {
             {/* App Logo */}
             <View style={styles.headerLogo}>
                 <Image style={styles.logo} source={logo} height={10} />
-                <Text>LOFI</Text>
+                <Text>LOFIMOS</Text>
             </View>
             <View style={styles.rightSideHeader}>
                 {/* Search Magnifine Logo */}
@@ -20,13 +20,13 @@ const HomeHeader: FC = () => {
                     <TouchableOpacity>
                         <Entypo
                             name="magnifying-glass"
-                            size={24}
+                            size={25}
                             color="black"
                         />
                     </TouchableOpacity>
                 </View>
                 {/* User profile */}
-                <View>
+                <View style={styles.userProfileHolder}>
                     <TouchableOpacity>
                         <AntDesign
                             style={styles.userProfile}
