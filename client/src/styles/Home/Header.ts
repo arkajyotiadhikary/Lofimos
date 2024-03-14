@@ -7,13 +7,11 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: 10,
+        paddingHorizontal: 15,
     },
     headerLogo: {
-        // justifyontent: "center",
         alignItems: "center",
         flexDirection: "row",
-        // backgroundColor: "black",
     },
     // TODO move the image a bit left so that the face of the girl stays a the center
     logo: {
@@ -28,8 +26,7 @@ export default StyleSheet.create({
         flexDirection: "row",
     },
     userProfileHolder: {
-        marginLeft: 15,
-        marginRight: 5,
+        marginLeft: 30,
         borderWidth: 1,
         borderRadius: 100,
     },

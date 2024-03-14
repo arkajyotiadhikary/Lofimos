@@ -5,13 +5,14 @@ import { Request, Response } from "express";
 export const getAllSongs = async (req: Request, res: Response): Promise<void> => {
       try {
             //  TODO return only first 10 songs
-            const songs = await Song.findAll();
+            const songs = await Song.findAll({ limit: 10 });
             res.json(songs);
       } catch (error) {
             console.error("Error fetching songs: ", error);
             res.status(500).json({ message: "Internal server error" });
       }
 };
+
 // get songs by id
 export const getSongByID = async (req: Request, res: Response): Promise<void> => {
       const { id } = req.params;
@@ -26,6 +27,45 @@ export const getSongByID = async (req: Request, res: Response): Promise<void> =>
             res.status(500).json({ message: "Internal server error" });
       }
 };
+
+// search songs
+// TODO the search is working with full correct name . It should work with half and incorrect names
+export const searchSongs = async (req: Request, res: Response): Promise<void> => {
+      console.log("searchSongs");
+      const { artist, songName, mood, timeOfTheDay, season, activity } = req.query;
+      try {
+            // where clause
+            let WhereClause: Record<string, string> = {};
+
+            // define where clause according to req query
+            if (artist) WhereClause["Artist"] = artist as string;
+            if (songName) WhereClause["Title"] = songName as string;
+            if (mood) WhereClause["Mood"] = mood as string;
+            if (timeOfTheDay) WhereClause["TimeOfTheDay"] = timeOfTheDay as string;
+            if (season) WhereClause["Season"] = season as string;
+            if (activity) WhereClause["Activity"] = activity as string;
+
+            console.log("Where clause: ", WhereClause);
+            // get the songs
+            const songs = await Song.findAll({ where: WhereClause });
+            res.json(songs);
+      } catch (error) {
+            console.error("Error searching songs: \n", error);
+            res.status(500).json({ message: "Internal server error" });
+      }
+};
+
+// search songs by popularity
+export const searchSongsByPopularity = async (req: Request, res: Response): Promise<void> => {
+      try {
+            const songs = await Song.findAll({ order: [["Plays", "DESC"]] });
+            res.json(songs);
+      } catch (error) {
+            console.log("Error searching songs by season: ", error);
+            res.status(500).json({ message: "Internal server error" });
+      }
+};
+
 // create songs
 export const createSong = async (req: Request, res: Response): Promise<void> => {
       // get song data from body
@@ -38,6 +78,7 @@ export const createSong = async (req: Request, res: Response): Promise<void> => 
             res.status(500).json({ message: "Internal server error" });
       }
 };
+
 // update songs
 export const updateSong = async (req: Request, res: Response): Promise<void> => {
       const { id } = req.params;
@@ -56,6 +97,7 @@ export const updateSong = async (req: Request, res: Response): Promise<void> => 
             res.status(500).json({ message: "Internal server error" });
       }
 };
+
 // delete songs
 export const deleteSong = async (req: Request, res: Response): Promise<void> => {
       const { id } = req.params;

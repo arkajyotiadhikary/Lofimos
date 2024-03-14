@@ -21,7 +21,7 @@ exports.sequelize = new sequelize_1.Sequelize({
     port: 5432,
     username: "postgres",
     password: "test123",
-    database: "harmonyxtrec",
+    database: "lofimos",
 });
 exports.songModel = (0, songs_model_2.initSongModel)(exports.sequelize);
 exports.userModel = (0, users_model_1.initUserModel)(exports.sequelize);

@@ -10,7 +10,7 @@ export const sequelize = new Sequelize({
       port: 5432,
       username: "postgres",
       password: "test123",
-      database: "harmonyxtrec",
+      database: "lofimos",
 });
 
 export const songModel = initSongModel(sequelize);
