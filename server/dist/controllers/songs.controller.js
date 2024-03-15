@@ -75,7 +75,7 @@ exports.searchSongs = searchSongs;
 // search songs by popularity
 const searchSongsByPopularity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const songs = yield songs_model_1.Song.findAll({ order: [["Plays", "DESC"]] });
+        const songs = yield songs_model_1.Song.findAll({ order: [["PlayCount", "DESC"]] });
         res.json(songs);
     }
     catch (error) {

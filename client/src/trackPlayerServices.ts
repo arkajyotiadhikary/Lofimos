@@ -4,6 +4,9 @@ import TrackPlayer, {
     RepeatMode,
     Event,
 } from "react-native-track-player";
+import { getAllSong } from "./services/songService";
+import { Song } from "../types";
+import { type AddTrack } from "react-native-track-player";
 
 // setup player
 export const setupPlayer = async () => {
@@ -46,30 +49,18 @@ export const setupPlayer = async () => {
 
 // add tracks
 export const addTrack = async () => {
-    await TrackPlayer.add([
-        // TODO we can use online audio here . it just needed the urls. we have to create some apis for that in the future
-        {
-            id: "1",
-            url: require("../assets/fluidity-100-ig-edit-4558.mp3"),
-            title: "Fluidity",
-            artist: "tobylane",
-            duration: 60,
-        },
-        {
-            id: "2",
-            url: require("../assets/penguinmusic-modern-chillout-future-calm-12641.mp3"),
-            title: "Modern Chillout",
-            artist: "penguinmusic",
-            duration: 66,
-        },
-        {
-            id: "3",
-            url: require("../assets/powerful-beat-121791.mp3"),
-            title: "Powerful Beat",
-            artist: "penguinmusic",
-            duration: 73,
-        },
-    ]);
+    let songs: AddTrack[] | undefined = await getAllSong();
+
+    // Check if songs is undefined or null
+    if (!songs) {
+        console.log("No songs found in the database");
+        return;
+    }
+
+    console.log("Songs from db:", songs);
+
+    // Now songs is guaranteed to be an array
+    await TrackPlayer.add(songs);
     await TrackPlayer.setRepeatMode(RepeatMode.Queue);
 };
 

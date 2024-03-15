@@ -12,6 +12,7 @@ import HomeHeader from "../components/Home/HomeHeader";
 import HomeAudioPlayer from "../components/Home/HomeAudioPlayer";
 // style
 import styles from "../styles/Home/Home";
+import { getAllSong } from "../services/songService";
 
 const Home: FC = () => {
     const [isPlayerReady, setIsPlayerReady] = useState<boolean>(false);

@@ -1,7 +1,40 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
+import { Song } from "../../types";
+import { handleAxiosError } from "./axiosErrorHandler";
+import { type AddTrack } from "react-native-track-player";
+
 const BASE_URL = "http://10.0.2.2:2526";
 
+// Function to calculate duration from "HH:mm:ss" format to seconds
+const calculateDurationInSeconds = (durationString: string | undefined) => {
+    if (!durationString) return 0; // If durationString is undefined or null, return 0
+
+    const [hours, minutes, seconds] = durationString.split(":").map(Number);
+    return hours * 3600 + minutes * 60 + seconds;
+};
+
 // get all songs
+export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
+    try {
+        const response: AxiosResponse<Song[]> = await axios.get(
+            `${BASE_URL}/api/songs`
+        );
+        const formatedSong = response.data.map((song, index) => ({
+            url: song.AudioFilePath,
+            title: song.Title,
+            artist: song.Artist,
+            album: song.Album,
+            genre: song.Genre,
+            artwork: song.CoverArtPath,
+            duration: calculateDurationInSeconds(song.Duration),
+        }));
+        console.log("songs response", formatedSong);
+        return formatedSong;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};
+
 // search songs by artist
 // serach songs by names
 // search songs by mood

@@ -1,34 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { type User } from "../../types";
+import { handleAxiosError } from "./axiosErrorHandler";
 
 const BASE_URL = "http://10.0.2.2:2526";
 
 type ValidateUserInput = {
     isValid: boolean;
     message: string;
-};
-
-// Handle Axios errors
-const handleAxiosError = (error: unknown): never => {
-    if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response) {
-            console.error(
-                "Server responded with an error:",
-                axiosError.response.data
-            );
-        } else if (axiosError.request) {
-            console.error(
-                "No response received:",
-                axiosError.request._response
-            );
-        } else {
-            console.error("Request setup error:", axiosError.message);
-        }
-    } else {
-        console.error("Unknown error:", error);
-    }
-    throw error;
 };
 
 // sign up methods

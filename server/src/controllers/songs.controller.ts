@@ -58,7 +58,7 @@ export const searchSongs = async (req: Request, res: Response): Promise<void> =>
 // search songs by popularity
 export const searchSongsByPopularity = async (req: Request, res: Response): Promise<void> => {
       try {
-            const songs = await Song.findAll({ order: [["Plays", "DESC"]] });
+            const songs = await Song.findAll({ order: [["PlayCount", "DESC"]] });
             res.json(songs);
       } catch (error) {
             console.log("Error searching songs by season: ", error);
