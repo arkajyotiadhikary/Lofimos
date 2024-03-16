@@ -31,16 +31,21 @@ const Home: FC = () => {
 
     useEffect(() => {
         const loadTrack = async () => {
-            if (queue !== undefined) await TrackPlayer.load(queue[audioIndex]);
+            if (queue !== undefined) {
+                await TrackPlayer.skip(audioIndex); // Skip to the track at audioIndex
+            }
         };
         loadTrack();
-    }, [audioIndex]);
+    }, [audioIndex]); // Include queue in dependencies
 
     return (
         <View style={styles.container}>
             <HomeHeader />
             <PlayerList queue={queue} />
-            <HomeAudioPlayer play={TrackPlayer.play} />
+            <HomeAudioPlayer
+                play={TrackPlayer.play}
+                pause={TrackPlayer.pause}
+            />
         </View>
     );
 };
