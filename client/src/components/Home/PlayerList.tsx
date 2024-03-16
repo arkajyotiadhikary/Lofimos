@@ -1,5 +1,5 @@
-import React, { FC, useState, useEffect } from "react";
-import { View, FlatList, ImageSourcePropType } from "react-native";
+import React, { FC, useState } from "react";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import TrackPlayer, {
     useTrackPlayerEvents,
     Event,
@@ -38,12 +38,14 @@ const PlayerList: FC<PlayListParams> = ({ queue }) => {
             <FlatList
                 data={queue}
                 renderItem={({ item, index }) => (
-                    <PlayerListItem
-                        index={index}
-                        title={item.title}
-                        artist={item.artist}
-                        coverArtPath={{ uri: item.artwork }}
-                    />
+                    <TouchableOpacity onPress={() => console.log("Pressed")}>
+                        <PlayerListItem
+                            index={index}
+                            title={item.title}
+                            artist={item.artist}
+                            coverArtPath={{ uri: item.artwork }}
+                        />
+                    </TouchableOpacity>
                 )}
             />
         </View>
