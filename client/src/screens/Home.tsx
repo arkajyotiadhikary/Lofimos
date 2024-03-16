@@ -1,15 +1,26 @@
 import React, { FC, useEffect, useState } from "react";
 import { View } from "react-native";
+
+// track plyer import
 import TrackPlayer from "react-native-track-player";
 import { setupPlayer, addTrack } from "../trackPlayerServices";
 import { Track } from "react-native-track-player";
+
+// components
 import PlayerList from "../components/Home/PlayerList";
 import HomeHeader from "../components/Home/HomeHeader";
 import HomeAudioPlayer from "../components/Home/HomeAudioPlayer";
+import SearchBar from "../components/Home/SearchBar";
+
+// styles
 import styles from "../styles/Home/Home";
+
+// hooks import
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPlayingSong } from "../features/song/songSlice";
 import { RootState } from "../store";
+
+// TODO on press in the text input . input field covers the header. Fix it
 
 const Home: FC = () => {
     const dispatch = useDispatch();
@@ -78,6 +89,8 @@ const Home: FC = () => {
         <View style={styles.container}>
             {/* Header component */}
             <HomeHeader />
+            {/* search bar */}
+            <SearchBar />
             {/* PlayerList component */}
             <PlayerList queue={queue} />
             {/* HomeAudioPlayer component */}

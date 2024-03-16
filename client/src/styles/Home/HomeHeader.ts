@@ -6,29 +6,21 @@ export default StyleSheet.create({
         height: "6%",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         paddingHorizontal: 15,
     },
-    headerLogo: {
-        alignItems: "center",
-        flexDirection: "row",
-    },
     // TODO move the image a bit left so that the face of the girl stays a the center
-    logo: {
+    userProfilePic: {
         width: 40,
         height: 40,
         marginEnd: 15,
         resizeMode: "contain",
-        borderRadius: 100,
+        borderRadius: 5,
         objectFit: "cover",
     },
-    rightSideHeader: {
-        flexDirection: "row",
+    greetings: {},
+    username: {
+        fontWeight: "bold",
+        fontSize: 20,
     },
-    userProfileHolder: {
-        marginLeft: 30,
-        borderWidth: 1,
-        borderRadius: 100,
-    },
-    userProfile: {},
 });

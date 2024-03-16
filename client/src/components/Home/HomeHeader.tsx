@@ -4,38 +4,22 @@ import logo from "../../../assets/images/Logo.jpg";
 
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
-import styles from "../../styles/Home/Header";
+import styles from "../../styles/Home/HomeHeader";
+
+// TODO setup user state manager
 
 const HomeHeader: FC = () => {
     return (
         <View style={styles.container}>
-            {/* App Logo */}
-            <View style={styles.headerLogo}>
-                <Image style={styles.logo} source={logo} height={10} />
-                <Text>LOFIMOS</Text>
+            {/* profile pic */}
+            <View>
+                <Image style={styles.userProfilePic} source={logo} />
             </View>
-            <View style={styles.rightSideHeader}>
-                {/* Search Magnifine Logo */}
-                <View>
-                    <TouchableOpacity>
-                        <Entypo
-                            name="magnifying-glass"
-                            size={25}
-                            color="black"
-                        />
-                    </TouchableOpacity>
-                </View>
-                {/* User profile */}
-                <View style={styles.userProfileHolder}>
-                    <TouchableOpacity>
-                        <AntDesign
-                            style={styles.userProfile}
-                            name="user"
-                            size={24}
-                            color="black"
-                        />
-                    </TouchableOpacity>
-                </View>
+            <View>
+                {/* good mornign or ... according to time */}
+                <Text style={styles.greetings}>Good Morning</Text>
+                {/* user name */}
+                <Text style={styles.username}>Test Arka</Text>
             </View>
         </View>
     );
