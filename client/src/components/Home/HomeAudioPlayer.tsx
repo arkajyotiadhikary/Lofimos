@@ -1,29 +1,33 @@
 import React, { FC } from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import {
+    View,
+    Image,
+    Text,
+    TouchableOpacity,
+    ImageSourcePropType,
+} from "react-native";
 import { Entypo } from "@expo/vector-icons";
-
-// test image for now for song player
-import img from "../../../assets/images/Logo.jpg";
+import { useSelector } from "react-redux";
 
 import styles from "../../styles/Home/HomeAudioPlayer";
+import { RootState } from "../../store";
 
 const HomeAudioPlayer: FC = () => {
+    const { title, artist, artwork } = useSelector(
+        (state: RootState) => state.songReducer
+    );
+
     return (
         <View style={styles.container}>
-            {/* music cover art */}
             <View>
-                {/*
-                    in future the song will be at the state from there we
-                    will be able to get the image
-                */}
-                <Image source={img} style={styles.musicArt} />
+                <Image
+                    source={artwork as ImageSourcePropType}
+                    style={styles.musicArt}
+                />
             </View>
             <View>
-                {/* song name */}
-                <Text>Test Music Name</Text>
-                {/* artist */}
-                <Text>Test Artist Name</Text>
-                {/* play pause btn */}
+                <Text>{title}</Text>
+                <Text>{artist}</Text>
             </View>
             <View style={styles.playBtnHolder}>
                 <TouchableOpacity style={styles.playBtn}>

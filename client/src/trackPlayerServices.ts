@@ -5,7 +5,6 @@ import TrackPlayer, {
     Event,
 } from "react-native-track-player";
 import { getAllSong } from "./services/songService";
-import { Song } from "../types";
 import { type AddTrack } from "react-native-track-player";
 
 // setup player

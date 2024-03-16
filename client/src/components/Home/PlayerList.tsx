@@ -1,5 +1,5 @@
-import React, { FC, useState, useEffect } from "react";
-import { View, FlatList, ImageSourcePropType } from "react-native";
+import React, { FC, useState } from "react";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import TrackPlayer, {
     useTrackPlayerEvents,
     Event,
