@@ -11,8 +11,13 @@ import { useSelector } from "react-redux";
 
 import styles from "../../styles/Home/HomeAudioPlayer";
 import { RootState } from "../../store";
+import { play } from "react-native-track-player/lib/trackPlayer";
 
-const HomeAudioPlayer: FC = () => {
+interface HomeAudioPlayerProps {
+    play: () => void;
+}
+
+const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
     const { title, artist, artwork } = useSelector(
         (state: RootState) => state.songReducer
     );
@@ -30,7 +35,7 @@ const HomeAudioPlayer: FC = () => {
                 <Text>{artist}</Text>
             </View>
             <View style={styles.playBtnHolder}>
-                <TouchableOpacity style={styles.playBtn}>
+                <TouchableOpacity style={styles.playBtn} onPress={play}>
                     <Entypo name="controller-play" size={24} color="black" />
                 </TouchableOpacity>
             </View>

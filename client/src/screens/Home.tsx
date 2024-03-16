@@ -1,20 +1,18 @@
 import React, { FC, useEffect, useState } from "react";
-import { View, Text } from "react-native";
-
-// track imports
+import { View } from "react-native";
 import TrackPlayer from "react-native-track-player";
 import { setupPlayer, addTrack } from "../trackPlayerServices";
-import { type Track } from "react-native-track-player";
-
-// Components
+import { Track } from "react-native-track-player";
 import PlayerList from "../components/Home/PlayerList";
 import HomeHeader from "../components/Home/HomeHeader";
 import HomeAudioPlayer from "../components/Home/HomeAudioPlayer";
-// style
 import styles from "../styles/Home/Home";
-import { getAllSong } from "../services/songService";
+import { useSelector } from "react-redux"; // Correct import statement
+import { RootState } from "../store";
 
 const Home: FC = () => {
+    const { audioIndex } = useSelector((state: RootState) => state.songReducer);
+
     const [isPlayerReady, setIsPlayerReady] = useState<boolean>(false);
     const [queue, setQueue] = useState<Track[]>();
 
@@ -31,12 +29,18 @@ const Home: FC = () => {
         setup();
     }, []);
 
+    useEffect(() => {
+        const loadTrack = async () => {
+            if (queue !== undefined) await TrackPlayer.load(queue[audioIndex]);
+        };
+        loadTrack();
+    }, [audioIndex]);
+
     return (
         <View style={styles.container}>
             <HomeHeader />
             <PlayerList queue={queue} />
-            <HomeAudioPlayer />
-            {/* <ButtonGroup play={TrackPlayer.play} /> */}
+            <HomeAudioPlayer play={TrackPlayer.play} />
         </View>
     );
 };
