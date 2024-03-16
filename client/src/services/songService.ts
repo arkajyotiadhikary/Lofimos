@@ -13,22 +13,29 @@ const calculateDurationInSeconds = (durationString: string | undefined) => {
     return hours * 3600 + minutes * 60 + seconds;
 };
 
-// get all songs
+/*
+ * Formate songs as AddTrack .
+ * We can only add tracks of type AddTrack in TrackPlayer
+ */
+const formateSong = (data: Song[]): AddTrack[] => {
+    return data.map((song, index) => ({
+        url: song.AudioFilePath,
+        title: song.Title,
+        artist: song.Artist,
+        album: song.Album,
+        genre: song.Genre,
+        artwork: song.CoverArtPath,
+        duration: calculateDurationInSeconds(song.Duration),
+    }));
+};
+
+// Get all tracks
 export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
     try {
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs`
         );
-        const formatedSong = response.data.map((song, index) => ({
-            url: song.AudioFilePath,
-            title: song.Title,
-            artist: song.Artist,
-            album: song.Album,
-            genre: song.Genre,
-            artwork: song.CoverArtPath,
-            duration: calculateDurationInSeconds(song.Duration),
-        }));
-        console.log("songs response", formatedSong);
+        const formatedSong = formateSong(response.data);
         return formatedSong;
     } catch (error) {
         handleAxiosError(error);

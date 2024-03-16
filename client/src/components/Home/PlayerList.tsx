@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, ImageSourcePropType } from "react-native";
 import TrackPlayer, {
     useTrackPlayerEvents,
     Event,
@@ -26,8 +26,6 @@ const events: Event[] = [
 const PlayerList: FC<PlayListParams> = ({ queue }) => {
     const [currentTrack, setCurrentTrack] = useState<number | undefined>();
 
-    console.log(queue);
-
     useTrackPlayerEvents(events, async (event) => {
         if (event.type == Event.PlaybackState) {
             let index = await TrackPlayer.getActiveTrackIndex();
@@ -40,7 +38,12 @@ const PlayerList: FC<PlayListParams> = ({ queue }) => {
             <FlatList
                 data={queue}
                 renderItem={({ item, index }) => (
-                    <PlayerListItem index={index} title={item.title} />
+                    <PlayerListItem
+                        index={index}
+                        title={item.title}
+                        artist={item.artist}
+                        coverArtPath={{ uri: item.artwork }}
+                    />
                 )}
             />
         </View>

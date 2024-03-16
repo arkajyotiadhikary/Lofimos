@@ -9,8 +9,24 @@ export default StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
     },
-    itemText: {
+    trackDetails: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    coverArt: {
+        borderColor: "black",
+        borderWidth: 1,
+        height: 45,
+        width: 45,
+        marginRight: 10,
+    },
+    details: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+    },
+    title: {
         color: "black",
+        fontWeight: "bold",
     },
     btn: {},
 });

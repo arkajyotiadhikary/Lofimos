@@ -34,7 +34,6 @@ const Auth: FC = () => {
             ...prevState,
             [name]: value,
         }));
-        console.log(formData);
     };
 
     // method to handle submit . Check wheather you are submittin sign in form of sign up form

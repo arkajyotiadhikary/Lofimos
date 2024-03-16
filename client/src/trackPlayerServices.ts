@@ -14,11 +14,9 @@ export const setupPlayer = async () => {
     try {
         await TrackPlayer.getActiveTrackIndex();
         isSetup = true;
-        console.log("Player first try");
     } catch (error) {
         try {
             await TrackPlayer.setupPlayer();
-            console.log("Player setuped");
             await TrackPlayer.updateOptions({
                 android: {
                     appKilledPlaybackBehavior:
@@ -56,8 +54,6 @@ export const addTrack = async () => {
         console.log("No songs found in the database");
         return;
     }
-
-    console.log("Songs from db:", songs);
 
     // Now songs is guaranteed to be an array
     await TrackPlayer.add(songs);
