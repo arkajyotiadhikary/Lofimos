@@ -44,7 +44,7 @@ export const signIn = async (
 
 // input validate
 export const validateUserInput = (
-    formData: Partial<User>, // Change to Partial<User> to ensure properties are optional
+    formData: Partial<User>,
     isLogIn: boolean
 ): ValidateUserInput => {
     // Validate if the username, email, and password are not empty

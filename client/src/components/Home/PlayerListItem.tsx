@@ -33,13 +33,14 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
             setCurrentPlayingSong({
                 artist: artist ? artist : "",
                 title: title ? title : "",
-                artwork: coverArtPath as string,
+                artwork: coverArtPath,
                 audioIndex: index,
             })
         );
     };
 
     return (
+        // TODO move touchalbe opecity inside view
         <TouchableOpacity onPress={handlePress}>
             <View style={styles.item}>
                 <View style={styles.trackDetails}>
