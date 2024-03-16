@@ -7,7 +7,7 @@ import {
     ImageSourcePropType,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { useSelector } from "react-redux"; // Import useDispatch
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { pause, play } from "react-native-track-player/lib/trackPlayer";
 
@@ -38,10 +38,7 @@ const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
     return (
         <View style={styles.container}>
             <View>
-                <Image
-                    source={artwork as ImageSourcePropType}
-                    style={styles.musicArt}
-                />
+                <Image source={artwork} style={styles.musicArt} />
             </View>
             <View>
                 <Text>{title}</Text>
@@ -50,7 +47,7 @@ const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
             <View style={styles.playBtnHolder}>
                 <TouchableOpacity
                     style={styles.playBtn}
-                    onPress={handlePlayPause} // Call handlePlayPause function on press
+                    onPress={handlePlayPause}
                 >
                     {isPlaying ? (
                         <Entypo

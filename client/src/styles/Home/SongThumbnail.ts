@@ -6,7 +6,5 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    img: {
-        // position: "absolute",
-    },
+    img: {},
 });

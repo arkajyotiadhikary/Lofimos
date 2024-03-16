@@ -33,7 +33,7 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
             setCurrentPlayingSong({
                 artist: artist ? artist : "",
                 title: title ? title : "",
-                artwork: coverArtPath as string,
+                artwork: coverArtPath,
                 audioIndex: index,
             })
         );

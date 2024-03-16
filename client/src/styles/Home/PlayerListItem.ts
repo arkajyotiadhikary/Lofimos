@@ -14,8 +14,6 @@ export default StyleSheet.create({
         alignItems: "center",
     },
     coverArt: {
-        borderColor: "black",
-        borderWidth: 1,
         height: 45,
         width: 45,
         marginRight: 10,

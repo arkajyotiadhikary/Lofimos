@@ -5,7 +5,7 @@ import logo from "../../../assets/images/Logo.jpg";
 export interface CurrentPlayingSong {
     title: string;
     artist: string;
-    artwork: string | number;
+    artwork: ImageSourcePropType;
     audioIndex: number;
 }
 

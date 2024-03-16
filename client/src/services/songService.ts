@@ -7,7 +7,7 @@ const BASE_URL = "http://10.0.2.2:2526";
 
 // Function to calculate duration from "HH:mm:ss" format to seconds
 const calculateDurationInSeconds = (durationString: string | undefined) => {
-    if (!durationString) return 0; // If durationString is undefined or null, return 0
+    if (!durationString) return 0;
 
     const [hours, minutes, seconds] = durationString.split(":").map(Number);
     return hours * 3600 + minutes * 60 + seconds;
