@@ -38,14 +38,12 @@ const PlayerList: FC<PlayListParams> = ({ queue }) => {
             <FlatList
                 data={queue}
                 renderItem={({ item, index }) => (
-                    <TouchableOpacity onPress={() => console.log("Pressed")}>
-                        <PlayerListItem
-                            index={index}
-                            title={item.title}
-                            artist={item.artist}
-                            coverArtPath={{ uri: item.artwork }}
-                        />
-                    </TouchableOpacity>
+                    <PlayerListItem
+                        index={index}
+                        title={item.title}
+                        artist={item.artist}
+                        coverArtPath={{ uri: item.artwork }}
+                    />
                 )}
             />
         </View>

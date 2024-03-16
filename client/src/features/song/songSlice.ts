@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ImageSourcePropType } from "react-native";
 import logo from "../../../assets/images/Logo.jpg";
 
-interface CurrentPlayingSong {
+export interface CurrentPlayingSong {
     title: string;
     artist: string;
     artwork: string | number;
