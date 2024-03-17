@@ -11,7 +11,7 @@ import { type Track } from "react-native-track-player";
 import PlayerListItem from "./PlayerListItem";
 
 // styles
-import styles from "../../styles/Home/PlayerList";
+import styles from "../../styles/HomeScreen/PlayerList";
 
 interface PlayListParams {
     queue: Track[] | undefined;

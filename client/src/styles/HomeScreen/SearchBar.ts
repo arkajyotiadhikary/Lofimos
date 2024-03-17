@@ -1,10 +1,19 @@
 import { StyleSheet } from "react-native";
 
+/**
+ * Stylesheet for search bar component.
+ *
+ * Defines styles for:
+ * - search bar container
+ * - search input holder
+ * - search input
+ */
 export default StyleSheet.create({
     container: {
         backgroundColor: "white",
         padding: 10,
     },
+
     inputHolder: {
         flexDirection: "row",
         alignItems: "center",

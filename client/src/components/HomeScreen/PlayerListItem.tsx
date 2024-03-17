@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { setCurrentPlayingSong } from "../../features/song/songSlice";
-import styles from "../../styles/Home/PlayerListItem";
+import styles from "../../styles/HomeScreen/PlayerListItem";
 import { Foundation } from "@expo/vector-icons";
 
 interface PlayerListItemProps {

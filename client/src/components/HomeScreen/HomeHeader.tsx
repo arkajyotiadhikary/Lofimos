@@ -2,9 +2,7 @@ import React, { FC } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import logo from "../../../assets/images/Logo.jpg";
 
-import { Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import styles from "../../styles/Home/HomeHeader";
+import styles from "../../styles/HomeScreen/HomeHeader";
 
 // TODO setup user state manager
 

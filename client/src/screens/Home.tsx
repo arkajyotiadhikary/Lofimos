@@ -7,13 +7,13 @@ import { setupPlayer, addTrack } from "../trackPlayerServices";
 import { Track } from "react-native-track-player";
 
 // components
-import PlayerList from "../components/Home/PlayerList";
-import HomeHeader from "../components/Home/HomeHeader";
-import HomeAudioPlayer from "../components/Home/HomeAudioPlayer";
-import SearchBar from "../components/Home/SearchBar";
+import PlayerList from "../components/HomeScreen/PlayerList";
+import HomeHeader from "../components/HomeScreen/HomeHeader";
+import HomeAudioPlayer from "../components/HomeScreen/HomeAudioPlayer";
+import SearchBar from "../components/HomeScreen/SearchBar";
 
 // styles
-import styles from "../styles/Home/Home";
+import styles from "../styles/HomeScreen/Home";
 
 // hooks import
 import { useSelector, useDispatch } from "react-redux";
@@ -21,6 +21,12 @@ import { setCurrentPlayingSong } from "../features/song/songSlice";
 import { RootState } from "../store";
 
 // TODO on press in the text input . input field covers the header. Fix it
+/**
+ * Renders the home screen.
+ *
+ * Includes the player list, audio player, search bar,
+ * and handles initializing the audio player.
+ */
 
 const Home: FC = () => {
     const dispatch = useDispatch();

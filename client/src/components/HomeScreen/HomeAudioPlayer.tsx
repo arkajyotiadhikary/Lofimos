@@ -11,7 +11,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { pause, play } from "react-native-track-player/lib/trackPlayer";
 
-import styles from "../../styles/Home/HomeAudioPlayer";
+import styles from "../../styles/HomeScreen/HomeAudioPlayer";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProp } from "../../../types";
 
 interface HomeAudioPlayerProps {
     play: () => void;
@@ -19,6 +21,9 @@ interface HomeAudioPlayerProps {
 }
 
 const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
+    // navigation
+    const navigation = useNavigation<RootStackNavigationProp>();
+
     const { title, artist, artwork } = useSelector(
         (state: RootState) => state.songReducer
     );
@@ -36,7 +41,10 @@ const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => navigation.navigate("PlayerScreen")}
+        >
             <View>
                 <Image source={artwork} style={styles.musicArt} />
             </View>
@@ -64,7 +72,7 @@ const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
                     )}
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
