@@ -32,8 +32,8 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
     const handlePress = (): void => {
         dispatch(
             setCurrentPlayingSong({
-                artist: artist ? artist : "",
-                title: title ? title : "",
+                artist: artist ?? "",
+                title: title ?? "",
                 artwork: coverArtPath,
                 audioIndex: index,
             })

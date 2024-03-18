@@ -15,38 +15,35 @@ const usePlayerInitialization = () => {
         (state: RootState) => state.currentPlayingReducer
     );
 
-    const initializePlayer = async () => {
-        try {
-            // Setup TrackPlayer
-            const isSetup = await setupPlayer();
+    const initializePlayer = async (): Promise<void> => {
+        const isSetup = await setupPlayer();
+        if (!isSetup) return;
 
-            // Check if setup was successful and if the queue is empty
-            if (isSetup) {
-                const queue = await TrackPlayer.getQueue();
-                if (queue.length === 0) {
-                    await addTrack();
-                }
-            }
+        await ensureQueueNotEmpty();
+        await dispatchCurrentSong();
+    };
 
-            // Retrieve the current queue and active track
-            const currentSong = await TrackPlayer.getActiveTrack();
+    const ensureQueueNotEmpty = async (): Promise<void> => {
+        const queue = await TrackPlayer.getQueue();
+        if (queue.length === 0) {
+            await addTrack();
+        }
+    };
 
-            // Dispatch the current song information
-            if (currentSong) {
-                const { artist = "", title = "", artwork } = currentSong;
-                dispatch(
-                    setCurrentPlayingSong({
-                        artist,
-                        title,
-                        artwork: { uri: artwork },
-                        audioIndex: audioIndex,
-                    })
-                );
-                const queue = await TrackPlayer.getQueue();
-                dispatch(setSongQueue(queue));
-            }
-        } catch (error) {
-            console.error("Error during setup:", error);
+    const dispatchCurrentSong = async (): Promise<void> => {
+        const currentSong = await TrackPlayer.getActiveTrack();
+        if (currentSong) {
+            const { artist = "", title = "", artwork } = currentSong;
+            dispatch(
+                setCurrentPlayingSong({
+                    artist,
+                    title,
+                    artwork: { uri: artwork },
+                    audioIndex: audioIndex,
+                })
+            );
+            const queue = await TrackPlayer.getQueue();
+            dispatch(setSongQueue(queue));
         }
     };
 
