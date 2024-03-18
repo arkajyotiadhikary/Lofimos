@@ -9,7 +9,9 @@ import styles from "../../styles/PlayerScreen/Header";
 
 const Header: FC = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
-    const { artist } = useSelector((state: RootState) => state.songReducer);
+    const { artist } = useSelector(
+        (state: RootState) => state.currentPlayingReducer
+    );
 
     const handleNavigateHome = () => {
         navigation.navigate("Home");

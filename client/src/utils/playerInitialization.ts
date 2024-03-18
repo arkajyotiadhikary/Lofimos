@@ -8,7 +8,9 @@ import { RootState } from "../store";
 
 const usePlayerInitialization = () => {
     const dispatch = useDispatch();
-    const { audioIndex } = useSelector((state: RootState) => state.songReducer);
+    const { audioIndex } = useSelector(
+        (state: RootState) => state.currentPlayingReducer
+    );
 
     const initializePlayer = async () => {
         try {

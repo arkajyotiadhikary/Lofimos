@@ -11,7 +11,7 @@ const TrackDetails: FC = () => {
     // TODO impleament liking the song/track
 
     const { artist, title } = useSelector(
-        (state: RootState) => state.songReducer
+        (state: RootState) => state.currentPlayingReducer
     );
 
     return (

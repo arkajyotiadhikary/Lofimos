@@ -1,5 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { View } from "react-native";
+
+import TrackPlayer from "react-native-track-player";
 
 import styles from "../styles/PlayerScreen/PlayerScreen";
 

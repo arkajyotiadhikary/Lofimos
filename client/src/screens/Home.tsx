@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { View } from "react-native";
 import { useSelector } from "react-redux";
-import TrackPlayer, { Track } from "react-native-track-player";
+import TrackPlayer from "react-native-track-player";
 import usePlayerInitialization from "../utils/playerInitialization";
 import HomeHeader from "../components/HomeScreen/HomeHeader";
 import HomeAudioPlayer from "../components/HomeScreen/HomeAudioPlayer";
@@ -12,7 +12,7 @@ import { RootState } from "../store";
 
 const Home: FC = () => {
     const { audioIndex, queue } = useSelector(
-        (state: RootState) => state.songReducer
+        (state: RootState) => state.currentPlayingReducer
     );
     const { initializePlayer } = usePlayerInitialization();
 
@@ -24,7 +24,7 @@ const Home: FC = () => {
         const loadSelectedTrack = async () => {
             try {
                 if (queue?.length || 0 > 0) {
-                    await TrackPlayer.skip(audioIndex);
+                    await TrackPlayer.skip(audioIndex || 0);
                 }
             } catch (error) {
                 console.error("Error while loading track:", error);
@@ -38,10 +38,7 @@ const Home: FC = () => {
             <HomeHeader />
             <SearchBar />
             <PlayerList queue={queue} />
-            <HomeAudioPlayer
-                play={TrackPlayer.play}
-                pause={TrackPlayer.pause}
-            />
+            <HomeAudioPlayer />
         </View>
     );
 };

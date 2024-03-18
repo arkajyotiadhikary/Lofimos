@@ -11,6 +11,9 @@ interface CurrentPlayingSong {
     audioIndex: number;
     queue?: Queue;
 }
+interface SongControls {
+    isPlaying: boolean;
+}
 
 type Queue = Track[];
 
@@ -22,8 +25,12 @@ const initialCurrentPlayingState: CurrentPlayingSong = {
     queue: [],
 };
 
-const songSlice = createSlice({
-    name: "song",
+const initialSongControlsState: SongControls = {
+    isPlaying: false,
+};
+
+const currentPlayingSlice = createSlice({
+    name: "currentPlaying",
     initialState: initialCurrentPlayingState,
     reducers: {
         setCurrentPlayingSong(
@@ -38,6 +45,17 @@ const songSlice = createSlice({
         },
     },
 });
+const songControlsSlice = createSlice({
+    name: "songControls",
+    initialState: initialSongControlsState,
+    reducers: {
+        setCurrentAudioControls(state, action: PayloadAction<SongControls>) {
+            state.isPlaying = action.payload.isPlaying;
+        },
+    },
+});
 
-export const { setCurrentPlayingSong } = songSlice.actions;
-export default songSlice.reducer;
+export const { setCurrentPlayingSong } = currentPlayingSlice.actions;
+export const { setCurrentAudioControls } = songControlsSlice.actions;
+export const currentPlayingReducer = currentPlayingSlice.reducer;
+export const songControlsReducer = songControlsSlice.reducer;

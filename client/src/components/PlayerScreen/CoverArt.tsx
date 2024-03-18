@@ -7,7 +7,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 const CoverArt = () => {
-    const { artwork } = useSelector((state: RootState) => state.songReducer);
+    const { artwork } = useSelector(
+        (state: RootState) => state.currentPlayingReducer
+    );
 
     return (
         <View style={styles.container}>
