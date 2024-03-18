@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    ImageSourcePropType,
+} from "react-native";
 
 import TrackPlayer, { useProgress } from "react-native-track-player";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { setCurrentAudioControls } from "../../features/song/songSlice";
+import {
+    setCurrentAudioControls,
+    setCurrentPlayingSong,
+} from "../../features/song/songSlice";
 import CustomSlider from "./audio controller/CustomSlider";
 import TimeDisplay from "./audio controller/TimeDisplay";
 import PlaybackControls from "./audio controller/PlaybackControls";
@@ -27,15 +35,24 @@ const AudioController = () => {
         TrackPlayer.seekTo(value * duration);
     };
 
-    const handleSkip = () => {
+    const handleSkip = async () => {
         TrackPlayer.skipToNext();
+        const activeTrack = await TrackPlayer.getActiveTrack();
+        dispatch(
+            setCurrentPlayingSong({
+                artist: activeTrack?.artist || "",
+                title: activeTrack?.title || "",
+                artwork: { uri: activeTrack?.artwork || "" },
+                audioIndex: activeTrack?.id,
+            })
+        );
     };
 
-    const handlePlayPause = () => {
+    const handlePlayPause = async () => {
         if (isPlaying) {
-            TrackPlayer.pause();
+            await TrackPlayer.pause();
         } else {
-            TrackPlayer.play();
+            await TrackPlayer.play();
         }
         dispatch(setCurrentAudioControls({ isPlaying: !isPlaying }));
     };

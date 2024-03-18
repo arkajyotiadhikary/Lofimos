@@ -1,15 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-
-import { UseSelector, useSelector } from "react-redux";
-
+import { useSelector } from "react-redux";
 import styles from "../../styles/PlayerScreen/TrackDetails";
 import { RootState } from "../../store";
 
 const TrackDetails: FC = () => {
-    // TODO impleament liking the song/track
-
+    // Select artist and title from Redux store
     const { artist, title } = useSelector(
         (state: RootState) => state.currentPlayingReducer
     );
@@ -23,7 +20,7 @@ const TrackDetails: FC = () => {
                 <Text>{artist}</Text>
             </View>
             {/* Like Button a heart icon */}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => console.log("Like pressed")}>
                 <Entypo name="heart" size={24} color="black" />
             </TouchableOpacity>
         </View>
