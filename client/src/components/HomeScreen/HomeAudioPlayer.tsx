@@ -1,42 +1,39 @@
-import React, { FC, useState } from "react";
-import {
-    View,
-    Image,
-    Text,
-    TouchableOpacity,
-    ImageSourcePropType,
-} from "react-native";
+import React, { FC } from "react";
+import { View, Image, Text, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { pause, play } from "react-native-track-player/lib/trackPlayer";
+import { setCurrentAudioControls } from "../../features/song/songSlice";
+import styles from "../../styles/HomeScreen/HomeAudioPlayer";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProp } from "../../../types";
+import TrackPlayer from "react-native-track-player";
 
-import styles from "../../styles/Home/HomeAudioPlayer";
+const HomeAudioPlayer: FC = () => {
+    const navigation = useNavigation<RootStackNavigationProp>();
+    const dispatch = useDispatch();
 
-interface HomeAudioPlayerProps {
-    play: () => void;
-    pause: () => void;
-}
-
-const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
     const { title, artist, artwork } = useSelector(
-        (state: RootState) => state.songReducer
+        (state: RootState) => state.currentPlayingReducer
     );
-
-    const [isPlaying, setIsPlaying] = useState(false);
+    const isPlaying = useSelector(
+        (state: RootState) => state.songControlsReducer.isPlaying
+    );
 
     const handlePlayPause = () => {
         if (isPlaying) {
-            pause();
-            setIsPlaying(false);
+            TrackPlayer.pause();
         } else {
-            play();
-            setIsPlaying(true);
+            TrackPlayer.play();
         }
+        dispatch(setCurrentAudioControls({ isPlaying: !isPlaying }));
     };
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => navigation.navigate("PlayerScreen")}
+        >
             <View>
                 <Image source={artwork} style={styles.musicArt} />
             </View>
@@ -64,7 +61,7 @@ const HomeAudioPlayer: FC<HomeAudioPlayerProps> = () => {
                     )}
                 </TouchableOpacity>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

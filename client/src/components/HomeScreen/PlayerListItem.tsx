@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { setCurrentPlayingSong } from "../../features/song/songSlice";
-import styles from "../../styles/Home/PlayerListItem";
+import styles from "../../styles/HomeScreen/PlayerListItem";
 import { Foundation } from "@expo/vector-icons";
+import { type Track } from "react-native-track-player";
 
 interface PlayerListItemProps {
     index: number;
@@ -17,6 +18,7 @@ interface PlayerListItemProps {
     artist: string | undefined;
     coverArtPath: ImageSourcePropType;
     isCurrent?: boolean | false;
+    queue?: Track[];
 }
 
 const PlayerListItem: FC<PlayerListItemProps> = ({
@@ -24,6 +26,7 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
     title,
     artist,
     coverArtPath,
+    queue,
     isCurrent,
 }) => {
     const dispatch = useDispatch();
@@ -35,6 +38,7 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
                 title: title ? title : "",
                 artwork: coverArtPath,
                 audioIndex: index,
+                queue: queue,
             })
         );
     };

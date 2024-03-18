@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    btnGrp: {
+    container: {
+        width: "100%",
         flexDirection: "row",
+        alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "white",
     },
-    btn: {
-        margin: 20,
+    image: {
+        width: 300,
+        height: 300,
     },
-    btnLogo: {},
 });
