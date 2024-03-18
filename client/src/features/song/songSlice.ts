@@ -9,7 +9,6 @@ interface CurrentPlayingSong {
     artist: string;
     artwork: ImageSourcePropType;
     audioIndex: number;
-    queue?: Queue;
 }
 interface SongControls {
     isPlaying: boolean;
@@ -22,12 +21,13 @@ const initialCurrentPlayingState: CurrentPlayingSong = {
     artist: "Test",
     artwork: logo,
     audioIndex: -1,
-    queue: [],
 };
 
 const initialSongControlsState: SongControls = {
     isPlaying: false,
 };
+
+const initialQueueState: Queue = [];
 
 const currentPlayingSlice = createSlice({
     name: "currentPlaying",
@@ -41,7 +41,6 @@ const currentPlayingSlice = createSlice({
             state.artist = action.payload.artist;
             state.artwork = action.payload.artwork;
             state.audioIndex = action.payload.audioIndex;
-            state.queue = action.payload.queue;
         },
     },
 });
@@ -55,7 +54,19 @@ const songControlsSlice = createSlice({
     },
 });
 
+const songQueueSlice = createSlice({
+    name: "songQueue",
+    initialState: initialQueueState,
+    reducers: {
+        setSongQueue(state, action: PayloadAction<Queue>) {
+            state.push(...action.payload);
+        },
+    },
+});
+
 export const { setCurrentPlayingSong } = currentPlayingSlice.actions;
 export const { setCurrentAudioControls } = songControlsSlice.actions;
+export const { setSongQueue } = songQueueSlice.actions;
 export const currentPlayingReducer = currentPlayingSlice.reducer;
 export const songControlsReducer = songControlsSlice.reducer;
+export const songQueueReducer = songQueueSlice.reducer;

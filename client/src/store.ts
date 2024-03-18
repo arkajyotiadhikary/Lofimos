@@ -4,12 +4,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import {
     currentPlayingReducer,
     songControlsReducer,
+    songQueueReducer,
 } from "./features/song/songSlice";
 
 export const store = configureStore({
     reducer: {
         currentPlayingReducer,
         songControlsReducer,
+        songQueueReducer,
     },
 });
 

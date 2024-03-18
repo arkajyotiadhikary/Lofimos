@@ -3,7 +3,10 @@
 import TrackPlayer from "react-native-track-player";
 import { addTrack, setupPlayer } from "../trackPlayerServices";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPlayingSong } from "../features/song/songSlice";
+import {
+    setCurrentPlayingSong,
+    setSongQueue,
+} from "../features/song/songSlice";
 import { RootState } from "../store";
 
 const usePlayerInitialization = () => {
@@ -37,9 +40,10 @@ const usePlayerInitialization = () => {
                         title,
                         artwork: { uri: artwork },
                         audioIndex: audioIndex,
-                        queue: await TrackPlayer.getQueue(),
                     })
                 );
+                const queue = await TrackPlayer.getQueue();
+                dispatch(setSongQueue(queue));
             }
         } catch (error) {
             console.error("Error during setup:", error);
