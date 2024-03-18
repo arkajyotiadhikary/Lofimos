@@ -9,12 +9,14 @@ interface PlaybackControlsProps {
     isPlaying: boolean;
     onPlayPause: () => void;
     onSkip: () => void;
+    onPrevious: () => void;
 }
 
 const PlaybackControls: FC<PlaybackControlsProps> = ({
     isPlaying,
     onPlayPause,
     onSkip,
+    onPrevious,
 }) => (
     <View style={styles.timelineControls}>
         <FontAwesome6
@@ -28,7 +30,7 @@ const PlaybackControls: FC<PlaybackControlsProps> = ({
             size={24}
             color="black"
             style={styles.icon}
-            onPress={onSkip}
+            onPress={onPrevious}
         />
         <TouchableOpacity onPress={onPlayPause}>
             {isPlaying ? (

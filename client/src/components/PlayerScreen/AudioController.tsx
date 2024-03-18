@@ -31,11 +31,22 @@ const AudioController = () => {
         }
     }, [position, duration]);
 
-    const handleSeek = (value: number) => {
+    /**
+     * Handle seek action by seeking to the specified value.
+     *
+     * @param {number} value - The value to seek to
+     * @return {void}
+     */
+    const handleSeek = (value: number): void => {
         TrackPlayer.seekTo(value * duration);
     };
 
-    const handleSkip = async () => {
+    /**
+     * Asynchronously handles skipping to the next track and updating the current playing song.
+     *
+     * @return {Promise<void>} This function does not return anything.
+     */
+    const handleSkip = async (): Promise<void> => {
         TrackPlayer.skipToNext();
         const activeTrack = await TrackPlayer.getActiveTrack();
         dispatch(
@@ -48,6 +59,27 @@ const AudioController = () => {
         );
     };
 
+    /**
+     * Function to handle playing the previous track.
+     *
+     * @return {Promise<void>} No return value
+     */
+    const handlePrevious = async (): Promise<void> => {
+        TrackPlayer.skipToPrevious();
+        const activeTrack = await TrackPlayer.getActiveTrack();
+        dispatch(
+            setCurrentPlayingSong({
+                artist: activeTrack?.artist || "",
+                title: activeTrack?.title || "",
+                artwork: { uri: activeTrack?.artwork || "" },
+                audioIndex: activeTrack?.id,
+            })
+        );
+    };
+
+    /**
+     * Function to handle playing or pausing audio.
+     */
     const handlePlayPause = async () => {
         if (isPlaying) {
             await TrackPlayer.pause();
@@ -65,6 +97,7 @@ const AudioController = () => {
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
                 onSkip={handleSkip}
+                onPrevious={handlePrevious}
             />
         </View>
     );
