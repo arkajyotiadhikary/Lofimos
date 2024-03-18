@@ -8,6 +8,7 @@ export default StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
     },
+
     textTitle: {
         fontWeight: "bold",
         fontSize: 16,

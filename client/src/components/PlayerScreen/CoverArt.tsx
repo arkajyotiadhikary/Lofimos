@@ -1,14 +1,17 @@
 import React from "react";
 import { View, Image } from "react-native";
 
-import logo from "../../../assets/images/Logo.jpg";
-
 import styles from "../../styles/PlayerScreen/CoverArt";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+
 const CoverArt = () => {
+    const { artwork } = useSelector((state: RootState) => state.songReducer);
+
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={logo} />
+            <Image style={styles.image} source={artwork} />
         </View>
     );
 };

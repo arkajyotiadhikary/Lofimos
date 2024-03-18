@@ -4,6 +4,9 @@ export default StyleSheet.create({
     container: {
         width: "100%",
     },
+    slider: {
+        marginVertical: 10,
+    },
     timelineValues: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -15,5 +18,8 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+    },
+    icon: {
+        elevation: 1,
     },
 });
