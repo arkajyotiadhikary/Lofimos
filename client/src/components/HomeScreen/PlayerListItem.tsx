@@ -26,8 +26,6 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
     title,
     artist,
     coverArtPath,
-    queue,
-    isCurrent,
 }) => {
     const dispatch = useDispatch();
 
@@ -38,7 +36,6 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
                 title: title ? title : "",
                 artwork: coverArtPath,
                 audioIndex: index,
-                queue: queue,
             })
         );
     };

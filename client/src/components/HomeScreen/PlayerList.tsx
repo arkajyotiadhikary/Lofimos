@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import React, { FC } from "react";
+import { View, FlatList } from "react-native";
 import { type Track } from "react-native-track-player";
 import PlayerListItem from "./PlayerListItem";
 

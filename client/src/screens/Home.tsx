@@ -11,9 +11,10 @@ import styles from "../styles/HomeScreen/Home";
 import { RootState } from "../store";
 
 const Home: FC = () => {
-    const { audioIndex, queue } = useSelector(
+    const { audioIndex } = useSelector(
         (state: RootState) => state.currentPlayingReducer
     );
+    const queue = useSelector((state: RootState) => state.songQueueReducer);
     const { initializePlayer } = usePlayerInitialization();
 
     useEffect(() => {
