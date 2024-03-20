@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
-import styles from "../styles/Auth";
+import styles from "../styles/Auth.style";
 import { type User } from "../../types";
 
 import { signUp, signIn, validateUserInput } from "../services/authService";

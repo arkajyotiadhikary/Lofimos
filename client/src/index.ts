@@ -2,10 +2,10 @@ import { AppRegistry } from "react-native";
 import TrackPlayer from "react-native-track-player";
 import App from "./App";
 import { expo } from "../app.json";
-import { playbackService } from "./trackPlayerServices";
+import { playbackService } from "./services/trackPlayerServices";
 
 interface ExpoConfig {
-      name: string;
+    name: string;
 }
 
 const { name }: ExpoConfig = expo;

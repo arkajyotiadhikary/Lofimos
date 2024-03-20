@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
-import styles from "../../styles/PlayerScreen/TrackDetails";
+import styles from "../../styles/PlayerScreen/TrackDetails.style";
 import { RootState } from "../../store";
 
 const TrackDetails: FC = () => {

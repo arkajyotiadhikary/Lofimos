@@ -3,11 +3,11 @@ import { View } from "react-native";
 import { useSelector } from "react-redux";
 import TrackPlayer from "react-native-track-player";
 import usePlayerInitialization from "../utils/playerInitialization";
-import HomeHeader from "../components/HomeScreen/HomeHeader";
-import HomeAudioPlayer from "../components/HomeScreen/HomeAudioPlayer";
-import PlayerList from "../components/HomeScreen/PlayerList";
-import SearchBar from "../components/HomeScreen/SearchBar";
-import styles from "../styles/HomeScreen/Home";
+import HomeHeader from "../components/HomeScreen/Header.component.home";
+import HomeAudioPlayer from "../components/HomeScreen/AudioPlayer.component.home";
+import PlayerList from "../components/HomeScreen/PlayerList.component.home";
+import SearchBar from "../components/HomeScreen/SearchBar.componenthome";
+import styles from "../styles/HomeScreen/Home.style";
 import { RootState } from "../store";
 
 const Home: FC = () => {

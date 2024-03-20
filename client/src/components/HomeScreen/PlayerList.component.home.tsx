@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { View, FlatList } from "react-native";
 import { type Track } from "react-native-track-player";
-import PlayerListItem from "./PlayerListItem";
+import PlayerListItem from "./PlayerListItem.component.home";
 
 // styles
-import styles from "../../styles/HomeScreen/PlayerList";
+import styles from "../../styles/HomeScreen/PlayerList.style";
 
 interface PlayListParams {
     queue: Track[] | undefined;

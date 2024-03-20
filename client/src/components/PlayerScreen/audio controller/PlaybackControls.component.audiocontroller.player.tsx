@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
-import styles from "../../../styles/PlayerScreen/AudioController";
+import styles from "../../../styles/PlayerScreen/AudioController.style";
 
 interface PlaybackControlsProps {
     isPlaying: boolean;

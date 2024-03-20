@@ -44,6 +44,21 @@ export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
 
 // search songs by artist
 // serach songs by names
+export const getSongsByName = async (
+    songName: string
+): Promise<AddTrack[] | undefined> => {
+    try {
+        const response: AxiosResponse<Song[]> = await axios.get(
+            `${BASE_URL}/api/songs/search`,
+            { params: { songName }, validateStatus: () => true }
+        );
+        const formatedSong = formateSong(response.data);
+        return formatedSong;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};
+
 // search songs by mood
 // search songs by time of the day
 // search songs by season.

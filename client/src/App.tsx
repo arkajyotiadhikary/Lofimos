@@ -10,9 +10,10 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 
 // screens
-import Home from "./screens/Home";
-import Auth from "./screens/Auth";
-import PlayerScreen from "./screens/PlayerScreen";
+import Home from "./screens/Home.screen";
+import Auth from "./screens/Auth.screen";
+import PlayerScreen from "./screens/Player.screen";
+import Search from "./screens/Search.screen";
 import { RootStackNavigationProp } from "../types";
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
                         name="PlayerScreen"
                         component={PlayerScreen}
                     />
+                    <stack.Screen name="Search" component={Search} />
                 </stack.Navigator>
             </NavigationContainer>
         </Provider>

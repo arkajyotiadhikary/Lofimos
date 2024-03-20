@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { setCurrentPlayingSong } from "../../features/song/songSlice";
-import styles from "../../styles/HomeScreen/PlayerListItem";
+import styles from "../../styles/HomeScreen/PlayerListItem.style";
 import { Foundation } from "@expo/vector-icons";
 import { type Track } from "react-native-track-player";
 
@@ -32,8 +32,8 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
     const handlePress = (): void => {
         dispatch(
             setCurrentPlayingSong({
-                artist: artist ? artist : "",
-                title: title ? title : "",
+                artist: artist ?? "",
+                title: title ?? "",
                 artwork: coverArtPath,
                 audioIndex: index,
             })

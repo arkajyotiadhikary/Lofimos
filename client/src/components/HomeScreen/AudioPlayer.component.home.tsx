@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { setCurrentAudioControls } from "../../features/song/songSlice";
-import styles from "../../styles/HomeScreen/HomeAudioPlayer";
+import styles from "../../styles/HomeScreen/HomeAudioPlayer.style";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../../../types";
 import TrackPlayer from "react-native-track-player";

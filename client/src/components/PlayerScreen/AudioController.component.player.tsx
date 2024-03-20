@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    ImageSourcePropType,
-} from "react-native";
-
+import { View } from "react-native";
 import TrackPlayer, { useProgress } from "react-native-track-player";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
@@ -13,9 +7,9 @@ import {
     setCurrentAudioControls,
     setCurrentPlayingSong,
 } from "../../features/song/songSlice";
-import CustomSlider from "./audio controller/CustomSlider";
-import TimeDisplay from "./audio controller/TimeDisplay";
-import PlaybackControls from "./audio controller/PlaybackControls";
+import CustomSlider from "./audio controller/CustomSlider.component.audiocontroller.player";
+import TimeDisplay from "./audio controller/TimeDisplay.component.audiocontroller.player";
+import PlaybackControls from "./audio controller/PlaybackControls.component.audiocontroller.player";
 
 const AudioController = () => {
     const dispatch = useDispatch();
@@ -31,55 +25,34 @@ const AudioController = () => {
         }
     }, [position, duration]);
 
-    /**
-     * Handle seek action by seeking to the specified value.
-     *
-     * @param {number} value - The value to seek to
-     * @return {void}
-     */
     const handleSeek = (value: number): void => {
         TrackPlayer.seekTo(value * duration);
     };
 
-    /**
-     * Asynchronously handles skipping to the next track and updating the current playing song.
-     *
-     * @return {Promise<void>} This function does not return anything.
-     */
-    const handleSkip = async (): Promise<void> => {
+    const updateCurrentPlayingSong = async () => {
+        const activeTrack = await TrackPlayer.getActiveTrack();
+        if (activeTrack) {
+            dispatch(
+                setCurrentPlayingSong({
+                    artist: activeTrack.artist || "",
+                    title: activeTrack.title || "",
+                    artwork: { uri: activeTrack.artwork || "" },
+                    audioIndex: activeTrack.id,
+                })
+            );
+        }
+    };
+
+    const handleSkip = async () => {
         TrackPlayer.skipToNext();
-        const activeTrack = await TrackPlayer.getActiveTrack();
-        dispatch(
-            setCurrentPlayingSong({
-                artist: activeTrack?.artist || "",
-                title: activeTrack?.title || "",
-                artwork: { uri: activeTrack?.artwork || "" },
-                audioIndex: activeTrack?.id,
-            })
-        );
+        await updateCurrentPlayingSong();
     };
 
-    /**
-     * Function to handle playing the previous track.
-     *
-     * @return {Promise<void>} No return value
-     */
-    const handlePrevious = async (): Promise<void> => {
+    const handlePrevious = async () => {
         TrackPlayer.skipToPrevious();
-        const activeTrack = await TrackPlayer.getActiveTrack();
-        dispatch(
-            setCurrentPlayingSong({
-                artist: activeTrack?.artist || "",
-                title: activeTrack?.title || "",
-                artwork: { uri: activeTrack?.artwork || "" },
-                audioIndex: activeTrack?.id,
-            })
-        );
+        await updateCurrentPlayingSong();
     };
 
-    /**
-     * Function to handle playing or pausing audio.
-     */
     const handlePlayPause = async () => {
         if (isPlaying) {
             await TrackPlayer.pause();

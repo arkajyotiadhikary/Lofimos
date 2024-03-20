@@ -5,7 +5,7 @@ import { AntDesign, Foundation } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { RootStackNavigationProp } from "../../../types";
-import styles from "../../styles/PlayerScreen/Header";
+import styles from "../../styles/PlayerScreen/Header.style";
 
 const Header: FC = () => {
     const navigation = useNavigation<RootStackNavigationProp>();

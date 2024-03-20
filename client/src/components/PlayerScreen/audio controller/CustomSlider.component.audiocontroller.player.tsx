@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import Slider from "@react-native-community/slider";
-import styles from "../../../styles/PlayerScreen/AudioController";
+import styles from "../../../styles/PlayerScreen/AudioController.style";
 
 interface CustomSliderProps {
     value: number;

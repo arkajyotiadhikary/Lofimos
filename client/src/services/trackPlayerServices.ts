@@ -4,7 +4,7 @@ import TrackPlayer, {
     RepeatMode,
     Event,
 } from "react-native-track-player";
-import { getAllSong } from "./services/songService";
+import { getAllSong } from "./songService";
 import { type AddTrack } from "react-native-track-player";
 
 // setup player
