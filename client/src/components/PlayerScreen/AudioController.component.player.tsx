@@ -7,9 +7,9 @@ import {
     setCurrentAudioControls,
     setCurrentPlayingSong,
 } from "../../features/song/songSlice";
-import CustomSlider from "./audio controller/CustomSlider";
-import TimeDisplay from "./audio controller/TimeDisplay";
-import PlaybackControls from "./audio controller/PlaybackControls";
+import CustomSlider from "./audio controller/CustomSlider.component.audiocontroller.player";
+import TimeDisplay from "./audio controller/TimeDisplay.component.audiocontroller.player";
+import PlaybackControls from "./audio controller/PlaybackControls.component.audiocontroller.player";
 
 const AudioController = () => {
     const dispatch = useDispatch();

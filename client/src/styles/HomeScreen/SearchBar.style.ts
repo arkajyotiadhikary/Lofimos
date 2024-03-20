@@ -23,8 +23,9 @@ export default StyleSheet.create({
         backgroundColor: "gainsboro",
         borderRadius: 20,
     },
-    input: {
+    text: {
         flex: 1,
+        textAlignVertical: "center",
         margin: 5,
         height: 40,
     },

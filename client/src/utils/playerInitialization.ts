@@ -1,7 +1,7 @@
 // playerInitialization.ts
 
 import TrackPlayer from "react-native-track-player";
-import { addTrack, setupPlayer } from "../trackPlayerServices";
+import { addTrack, setupPlayer } from "../services/trackPlayerServices";
 import { useDispatch, useSelector } from "react-redux";
 import {
     setCurrentPlayingSong,

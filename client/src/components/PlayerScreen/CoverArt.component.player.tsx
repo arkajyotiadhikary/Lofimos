@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image } from "react-native";
 
-import styles from "../../styles/PlayerScreen/CoverArt";
+import styles from "../../styles/PlayerScreen/CoverArt.style";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";

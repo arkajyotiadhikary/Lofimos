@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { View, Text } from "react-native";
 
-import styles from "../../../styles/PlayerScreen/AudioController";
+import styles from "../../../styles/PlayerScreen/AudioController.style";
 
 interface TimeDisplayProps {
     position: number;

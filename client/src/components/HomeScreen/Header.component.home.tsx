@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { View, Text, Image } from "react-native";
 import logo from "../../../assets/images/Logo.jpg";
 
-import styles from "../../styles/HomeScreen/HomeHeader";
+import styles from "../../styles/HomeScreen/HomeHeader.style";
 
 // TODO setup user state manager
 
