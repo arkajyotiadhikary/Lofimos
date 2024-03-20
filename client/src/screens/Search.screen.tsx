@@ -10,16 +10,38 @@ import { AddTrack } from "react-native-track-player";
 import styles from "../styles/SearchScreen/SearchScreen.style";
 
 const Search: FC = () => {
+    // Store search results so that the user can access them later
     const [searchResult, setSearchResult] = useState<AddTrack[]>([]);
+    const [list, setList] = useState<AddTrack[]>([]);
+    const [querySong, setQuerySong] = useState<string>("");
+
+    let cachedResults: AddTrack[] = [];
 
     useEffect(() => {
-        loadCachedResult("searchResult", setSearchResult);
-    });
+        (async () => {
+            cachedResults = await loadCachedResult("searchResult");
+            setSearchResult(cachedResults || []);
+        })();
+    }, []);
+
+    useEffect(() => {
+        if (querySong.trim() !== "") {
+            const filteredResults = searchResult.filter((track) =>
+                track.title?.toLowerCase().includes(querySong.toLowerCase())
+            );
+            setList(filteredResults);
+        } else {
+            setList([]);
+        }
+    }, [querySong, searchResult]);
 
     return (
         <View style={styles.container}>
-            <Header setSearchResult={setSearchResult} />
-            <SearchResult data={searchResult} />
+            <Header
+                setSearchResult={setSearchResult}
+                setQuearySong={setQuerySong}
+            />
+            <SearchResult data={list} />
         </View>
     );
 };

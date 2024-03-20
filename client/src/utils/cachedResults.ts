@@ -2,14 +2,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { type AddTrack } from "react-native-track-player";
 
-export const loadCachedResult = async (
-    itemName: string,
-    state: Dispatch<SetStateAction<AddTrack[]>>
-) => {
+export const loadCachedResult = async (itemName: string) => {
     try {
         const cachedResults = await AsyncStorage.getItem(itemName);
         if (cachedResults) {
-            state(JSON.parse(cachedResults));
+            return JSON.parse(cachedResults);
         }
     } catch (error) {
         console.error("Error loading cached results:", error);

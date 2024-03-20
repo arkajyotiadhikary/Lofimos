@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { type AddTrack } from "react-native-track-player";
 
@@ -28,12 +28,11 @@ const _data: AddTrack[] = [
     },
 ];
 const SearchResult: FC<SearchResultParams> = ({ data }) => {
-    useEffect(() => console.log("data", data), [data]);
     return (
         <View style={styles.container}>
-            {_data.length > 0 ? (
+            {data.length > 0 ? (
                 <FlatList
-                    data={_data}
+                    data={data}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={styles.listItem}>
                             <View style={styles.listItemContent}>

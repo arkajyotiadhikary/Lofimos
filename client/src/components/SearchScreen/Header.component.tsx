@@ -9,24 +9,24 @@ import { type AddTrack } from "react-native-track-player";
 
 interface HeaderParams {
     setSearchResult: Dispatch<SetStateAction<AddTrack[]>>;
+    setQuearySong: Dispatch<SetStateAction<string>>;
 }
 
-const Header: FC<HeaderParams> = ({ setSearchResult }) => {
+const Header: FC<HeaderParams> = ({ setSearchResult, setQuearySong }) => {
     const navigation = useNavigation();
-
-    const [quearySong, setQuearySong] = useState("");
-
+    let quearySong: string = "";
     // handle search
     const handleSearch = async (): Promise<void> => {
         try {
             const searchResults = await getSongsByName(quearySong);
+            saveCachedResult("searchResult", searchResults || []);
             setSearchResult(searchResults || []);
         } catch (error) {}
     };
 
     const handleChange = (value: string): void => {
         setQuearySong(value);
-        loadCachedResult("searchResult", setSearchResult);
+        quearySong = value;
     };
 
     return (
