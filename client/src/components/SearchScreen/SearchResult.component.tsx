@@ -8,25 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 interface SearchResultParams {
     data: AddTrack[];
 }
-// ! Temp data . Delete it later.
-const _data: AddTrack[] = [
-    {
-        title: "Title 1",
-        artist: "Artist 1",
-        artwork:
-            "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        url: "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        duration: 100,
-    },
-    {
-        title: "Title 2",
-        artist: "Artist 2",
-        artwork:
-            "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        url: "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        duration: 200,
-    },
-];
+
 const SearchResult: FC<SearchResultParams> = ({ data }) => {
     return (
         <View style={styles.container}>
@@ -56,7 +38,7 @@ const SearchResult: FC<SearchResultParams> = ({ data }) => {
                 />
             ) : (
                 <View>
-                    <Text>No Results</Text>
+                    <Text style={styles.noResults}>No Results</Text>
                 </View>
             )}
         </View>

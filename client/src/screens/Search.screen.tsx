@@ -38,6 +38,7 @@ const Search: FC = () => {
     return (
         <View style={styles.container}>
             <Header
+                searchResult={searchResult}
                 setSearchResult={setSearchResult}
                 setQuearySong={setQuerySong}
             />

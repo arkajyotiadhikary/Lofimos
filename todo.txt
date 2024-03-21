@@ -1,0 +1,5 @@
+#TODO
+> fix cached store system
+> add clickable feature of the resulted songs
+> change audio ui
+> user auth

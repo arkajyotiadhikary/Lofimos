@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { type AddTrack } from "react-native-track-player";
 
 export const loadCachedResult = async (itemName: string) => {
     try {
