@@ -8,25 +8,33 @@ import { getSongsByName } from "../../services/songService";
 import { type AddTrack } from "react-native-track-player";
 
 interface HeaderParams {
+    searchResult: AddTrack[];
     setSearchResult: Dispatch<SetStateAction<AddTrack[]>>;
+    setQuearySong: Dispatch<SetStateAction<string>>;
 }
 
-const Header: FC<HeaderParams> = ({ setSearchResult }) => {
+const Header: FC<HeaderParams> = ({
+    searchResult,
+    setSearchResult,
+    setQuearySong,
+}) => {
     const navigation = useNavigation();
-
-    const [quearySong, setQuearySong] = useState("");
-
+    const [_querySong, _setQuerySong] = useState<string>("");
     // handle search
     const handleSearch = async (): Promise<void> => {
         try {
-            const searchResults = await getSongsByName(quearySong);
-            setSearchResult(searchResults || []);
-        } catch (error) {}
+            const response = await getSongsByName(_querySong);
+            const updatedResults = [...searchResult, ...(response || [])];
+            setSearchResult(updatedResults);
+            saveCachedResult("searchResult", updatedResults);
+        } catch (error) {
+            // Handle error if needed
+            console.error("Error occurred during search:", error);
+        }
     };
-
     const handleChange = (value: string): void => {
         setQuearySong(value);
-        loadCachedResult("searchResult", setSearchResult);
+        _setQuerySong(value);
     };
 
     return (

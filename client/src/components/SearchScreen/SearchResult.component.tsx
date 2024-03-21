@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { type AddTrack } from "react-native-track-player";
 
@@ -8,32 +8,13 @@ import { AntDesign } from "@expo/vector-icons";
 interface SearchResultParams {
     data: AddTrack[];
 }
-// ! Temp data . Delete it later.
-const _data: AddTrack[] = [
-    {
-        title: "Title 1",
-        artist: "Artist 1",
-        artwork:
-            "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        url: "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        duration: 100,
-    },
-    {
-        title: "Title 2",
-        artist: "Artist 2",
-        artwork:
-            "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        url: "https://i.scdn.co/image/ab67616d0000b2739a7d5a3f6f0a7b8f7d6a0b6c",
-        duration: 200,
-    },
-];
+
 const SearchResult: FC<SearchResultParams> = ({ data }) => {
-    useEffect(() => console.log("data", data), [data]);
     return (
         <View style={styles.container}>
-            {_data.length > 0 ? (
+            {data.length > 0 ? (
                 <FlatList
-                    data={_data}
+                    data={data}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={styles.listItem}>
                             <View style={styles.listItemContent}>
@@ -57,7 +38,7 @@ const SearchResult: FC<SearchResultParams> = ({ data }) => {
                 />
             ) : (
                 <View>
-                    <Text>No Results</Text>
+                    <Text style={styles.noResults}>No Results</Text>
                 </View>
             )}
         </View>

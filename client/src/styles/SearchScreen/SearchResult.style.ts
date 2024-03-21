@@ -24,4 +24,10 @@ export default StyleSheet.create({
     listItemText: {
         marginLeft: 10,
     },
+    noResults: {
+        fontSize: 18,
+        fontWeight: "bold",
+        textAlign: "center",
+        marginTop: 20,
+    },
 });

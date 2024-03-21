@@ -50,12 +50,14 @@ export const getSongsByName = async (
     try {
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs/search`,
-            { params: { songName }, validateStatus: () => true }
+            { params: { songName: songName } }
         );
         const formatedSong = formateSong(response.data);
         return formatedSong;
     } catch (error) {
-        handleAxiosError(error);
+        // You may want to handle errors differently based on your requirements
+        console.error("Error fetching songs by name:", error);
+        throw error; // Rethrow the error to handle it elsewhere if needed
     }
 };
 
