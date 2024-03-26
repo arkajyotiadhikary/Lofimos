@@ -74,20 +74,22 @@ export const createUser = async (userData: Partial<User>): Promise<User | { mess
 
 // update users
 export const updateUser = async (
-      req: Request,
-      res: Response
-): Promise<Response<any, Record<string, any>> | undefined> => {
-      const { id } = req.params;
-      const userData: RequestBody<User> = req.body;
+      userId: number,
+      data: Partial<User>
+): Promise<User | { message: string }> => {
       try {
-            const user = await User.findByPk(id);
-            if (!user) return res.status(404).json({ message: `No user found with the id ${id}` });
-            await User.update(userData, { where: { UserID: id } });
-            const updatedUser = await User.findByPk(id);
-            return res.json(updatedUser);
+            const user = await User.findByPk(userId);
+            if (!user) return { message: `No user found with the id ${userId}` };
+            await User.update(data, { where: { userID: userId } });
+            const updatedUser = await User.findByPk(userId);
+            if (updatedUser) {
+                  return updatedUser;
+            } else {
+                  return { message: `No user found with the id ${userId}` };
+            }
       } catch (error) {
             console.error("Error updating user", error);
-            return res.status(500).json({ message: "Internal server error" });
+            throw { message: "Internal server error." };
       }
 };
 // delete users

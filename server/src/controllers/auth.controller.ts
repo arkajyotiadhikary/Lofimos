@@ -1,5 +1,5 @@
 import { type Request, type Response } from "express";
-import { createUser, getUserByEmail } from "./users.controller";
+import { createUser, getUserByEmail, updateUser } from "./users.controller";
 import { User } from "../models/users.model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -11,7 +11,7 @@ interface ResponseBody {
 }
 
 const generateAccessToken = (user: User): string => {
-      return jwt.sign({ id: user.userID }, process.env.JWT_SECRETE!, {
+      return jwt.sign({ id: user.userID, role: user.role }, process.env.JWT_SECRETE!, {
             expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRE,
       });
 };
@@ -56,7 +56,17 @@ export const loginUser = async (req: Request, res: Response) => {
                         const accessToken = generateAccessToken(user);
                         const refreshToken = generateRefreshToken(user);
                         const sessionID = generateSessionID(user);
-                        res.json({ accessToken, refreshToken, sessionID });
+                        try {
+                              const updatedUser = await updateUser(user.userID, {
+                                    accessToken,
+                                    refreshToken,
+                                    sessionID,
+                              });
+                              console.log("Updated user: ", updatedUser);
+                        } catch (error) {
+                              console.error(error);
+                        }
+                        res.json({ accessToken, refreshToken, sessionID, role: user.role });
                   }
       } catch (error) {
             console.error(error);
