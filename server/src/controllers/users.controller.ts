@@ -1,6 +1,8 @@
 import { type Request, type Response } from "express";
 import { User } from "../models/users.model";
 
+import bcrypt from "bcrypt";
+
 type RequestBody<T extends {}> = {
       body: T;
 };
@@ -36,9 +38,32 @@ export const getUserByID = async (
             return res.status(500).json({ message: "Internal server error." });
       }
 };
-// create users
-export const createUser = async (userData: Partial<User>): Promise<User> => {
+
+// get user by email
+export const getUserByEmail = async (userEmail: string): Promise<User | null> => {
       try {
+            console.log("User email for login", userEmail);
+            const user = await User.findOne({ where: { email: userEmail } });
+            return user;
+      } catch (error) {
+            console.error("Error fetching user data by email.", error);
+            throw { message: "Internal server error." };
+      }
+};
+
+// TODO verify we have only one user with this email
+// TODO use salt to store passwords
+// create users
+export const createUser = async (userData: Partial<User>): Promise<User | { message: string }> => {
+      const { email, password } = userData;
+
+      try {
+            const existingUser = await User.findOne({ where: { email } });
+            if (existingUser) {
+                  return { message: "User already exists." };
+            }
+            const saltPassword = password ? await bcrypt.hash(password, 10) : "";
+            userData.password = saltPassword;
             const user = await User.create(userData);
             return user;
       } catch (error) {

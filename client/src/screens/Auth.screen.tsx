@@ -1,7 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 
 import styles from "../styles/Auth.style";
+import logo from "../assests/logo/wepik-export-20240324130518XYcX.png";
+
 import { type User } from "../../types";
 
 import { signUp, signIn, validateUserInput } from "../services/authService";
@@ -62,6 +64,10 @@ const Auth: FC = () => {
                 <Text style={styles.formTitle}>
                     {isSignIn ? "Sign In" : "Sign Up"}
                 </Text>
+                {/* logo */}
+                <View>
+                    <Image style={styles.logo} source={logo} />
+                </View>
                 {/* error message box */}
                 <View>
                     {errorState ? (

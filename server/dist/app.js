@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 // routes
 const songs_route_1 = __importDefault(require("./routers/songs.route"));
 const auth_route_1 = __importDefault(require("./routers/auth.route"));

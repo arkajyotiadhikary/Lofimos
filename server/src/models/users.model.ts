@@ -31,10 +31,24 @@ export const initUserModel = (sequelize: Sequelize): void => {
                   profile_picture: {
                         type: DataTypes.STRING,
                   },
+                  isAdmin: {
+                        type: DataTypes.BOOLEAN,
+                        allowNull: false,
+                        defaultValue: false,
+                  },
+                  accessToken: {
+                        type: DataTypes.STRING,
+                  },
+                  refreshToken: {
+                        type: DataTypes.STRING,
+                  },
+                  sessionID: {
+                        type: DataTypes.STRING,
+                  },
             },
             {
                   sequelize,
-                  tableName: " Users",
+                  tableName: "Users",
             }
       );
       console.log("User model has initiated!");

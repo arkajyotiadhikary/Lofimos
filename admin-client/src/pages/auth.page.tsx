@@ -2,7 +2,34 @@ import { useState } from "react";
 
 import logo from "../public/logo/wepik-export-20240324130518XYcX.png";
 
+import { UserData } from "../types";
+import { signIn } from "../services/authServices";
+
 const Auth = () => {
+      const [userData, setUserData] = useState<UserData>({
+            email: "",
+            password: "",
+      });
+
+      // TODO user input validation
+      // handle submit
+      const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            try {
+                  console.log("btn pressed", userData);
+                  const response = await signIn(userData);
+                  console.log(response);
+            } catch (error) {
+                  console.log(error);
+            }
+      };
+
+      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event.target;
+            setUserData((prev) => ({ ...prev, [name]: value }));
+      };
+
+      // TODO error message display
       return (
             <div className="Auth">
                   <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -19,7 +46,7 @@ const Auth = () => {
                         </div>
 
                         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                              <form className="space-y-6" action="#" method="POST">
+                              <form className="space-y-6" onSubmit={handleSubmit}>
                                     <div>
                                           <label
                                                 htmlFor="email"
@@ -33,6 +60,8 @@ const Auth = () => {
                                                       name="email"
                                                       type="email"
                                                       autoComplete="email"
+                                                      value={userData.email}
+                                                      onChange={handleChange}
                                                       required
                                                       className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
@@ -62,6 +91,8 @@ const Auth = () => {
                                                       name="password"
                                                       type="password"
                                                       autoComplete="current-password"
+                                                      value={userData.password}
+                                                      onChange={handleChange}
                                                       required
                                                       className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                                 />
