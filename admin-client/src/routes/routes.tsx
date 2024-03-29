@@ -2,8 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 
 // pages
-import Auth from "../pages/auth.page";
-import Upload from "../pages/upload.page";
+import Auth from "../pages/Auth.page";
+import Upload from "../pages/Upload.page";
+import SongsList from "../pages/SongsList.page";
 
 export const Router = createBrowserRouter([
       {
@@ -15,6 +16,7 @@ export const Router = createBrowserRouter([
                         element: <Auth />,
                   },
                   { path: "/upload", element: <Upload /> },
+                  { path: "/songs", element: <SongsList /> },
             ],
       },
 ]);

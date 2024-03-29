@@ -49,7 +49,10 @@ const Auth: FC = () => {
                     formData.email,
                     formData.password
                 );
-                // if (!response?.hasError) setIsSignIn(true);
+                if ("message" in response) {
+                    console.log(response);
+                    setErrorState(response?.message);
+                }
             }
         } else {
             setErrorState(validation.message);
@@ -61,13 +64,14 @@ const Auth: FC = () => {
         <View style={styles.container}>
             {/* form */}
             <View style={styles.formTitleHolder}>
-                <Text style={styles.formTitle}>
-                    {isSignIn ? "Sign In" : "Sign Up"}
-                </Text>
                 {/* logo */}
                 <View>
                     <Image style={styles.logo} source={logo} />
                 </View>
+                {/* form title */}
+                <Text style={styles.formTitle}>
+                    {isSignIn ? "Sign In" : "Sign Up"}
+                </Text>
                 {/* error message box */}
                 <View>
                     {errorState ? (
