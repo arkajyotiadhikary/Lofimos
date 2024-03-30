@@ -1,15 +1,25 @@
-import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
+import React, { createContext, useContext, useState } from "react";
 
+import { createBrowserRouter } from "react-router-dom";
+import { AuthProvider } from "../contexts/AuthContext";
 // pages
+import App from "../App";
 import Auth from "../pages/Auth.page";
 import Upload from "../pages/Upload.page";
 import SongsList from "../pages/SongsList.page";
 
+const AuthContext = createContext(undefined);
+
+export const useAuth = () => useContext(AuthContext);
+
 export const Router = createBrowserRouter([
       {
             path: "/",
-            element: <App />,
+            element: (
+                  <AuthProvider>
+                        <App />
+                  </AuthProvider>
+            ),
             children: [
                   {
                         path: "/auth",

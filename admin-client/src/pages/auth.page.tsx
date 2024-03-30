@@ -1,24 +1,32 @@
-import { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { UserData, UserResponseData } from "../types";
+import { signIn } from "../services/authServices";
+import { AuthContext } from "../contexts/AuthContext"; // Import the authentication context
 
 import logo from "../public/logo/wepik-export-20240324130518XYcX.png";
 
-import { UserData } from "../types";
-import { signIn } from "../services/authServices";
-
 const Auth = () => {
+      const navigate = useNavigate();
       const [userData, setUserData] = useState<UserData>({
             email: "",
             password: "",
       });
 
-      // TODO user input validation
-      // handle submit
+      const authContext = useContext(AuthContext); // Get the authentication context
+
       const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             try {
                   console.log("btn pressed", userData);
-                  const response = await signIn(userData);
-                  console.log(response);
+                  const response: UserResponseData | undefined = await signIn(userData);
+                  if (response) {
+                        console.log("signed in auth context", authContext.user);
+                        console.log("signed in response", response);
+                        authContext.setUser(response);
+                        // navigate("/songs");
+                  }
             } catch (error) {
                   console.log(error);
             }
@@ -35,14 +43,14 @@ const Auth = () => {
                   <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                               <img className="mx-auto h-10 w-auto" src={logo} alt="Lofimos" />
-                              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                              <div className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                                           <span className="block">Administrator Login</span>
                                           <span className="text-sm font-normal">
                                                 Please log in to access the administrator features
                                           </span>
                                     </h2>
-                              </h2>
+                              </div>
                         </div>
 
                         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">

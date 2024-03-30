@@ -6,14 +6,24 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
 import { Song } from "../types";
+import { useAuth } from "../contexts/AuthContext";
 
 const SongsList: FC = () => {
       const navigate = useNavigate();
       const [songs, setSongs] = useState<Song[]>([]);
+      const { user } = useAuth();
 
       useEffect(() => {
+            // console.log("user", user);
+            // // Check if the user is verified before fetching songs
+            // if (!user) {
+            //       // Redirect the user to the authentication page if not verified
+            //       navigate("/auth");
+            // } else {
+
+            // }
             (async () => setSongs(await getAllSongs()))();
-      }, []);
+      }, [user, navigate]);
 
       return (
             <div className="container mx-auto px-10 py-10">

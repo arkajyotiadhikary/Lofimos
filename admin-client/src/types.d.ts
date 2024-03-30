@@ -2,6 +2,14 @@ export type UserData = {
       email: string;
       password: string;
 };
+
+export type UserResponseData = {
+      accessToken: string;
+      refreshToken: string;
+      sessionID: string;
+      role: string;
+      userVerified: boolean;
+};
 export type Song = {
       SongID: number;
       Title: string;
