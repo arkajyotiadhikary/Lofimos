@@ -1,7 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
 
 import styles from "../styles/Auth.style";
+import logo from "../assests/logo/wepik-export-20240324130518XYcX.png";
+
 import { type User } from "../../types";
 
 import { signUp, signIn, validateUserInput } from "../services/authService";
@@ -47,7 +49,10 @@ const Auth: FC = () => {
                     formData.email,
                     formData.password
                 );
-                // if (!response?.hasError) setIsSignIn(true);
+                if ("message" in response) {
+                    console.log(response);
+                    setErrorState(response?.message);
+                }
             }
         } else {
             setErrorState(validation.message);
@@ -59,6 +64,11 @@ const Auth: FC = () => {
         <View style={styles.container}>
             {/* form */}
             <View style={styles.formTitleHolder}>
+                {/* logo */}
+                <View>
+                    <Image style={styles.logo} source={logo} />
+                </View>
+                {/* form title */}
                 <Text style={styles.formTitle}>
                     {isSignIn ? "Sign In" : "Sign Up"}
                 </Text>

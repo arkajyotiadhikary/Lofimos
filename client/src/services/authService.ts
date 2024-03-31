@@ -14,15 +14,23 @@ export const signUp = async (
     username: string | undefined,
     email: string | undefined,
     password: string | undefined
-): Promise<User | undefined> => {
+): Promise<
+    | { hasError: boolean; User: User }
+    | { hasError: boolean; message: string }
+    | unknown
+> => {
     try {
-        const response: AxiosResponse<User> = await axios.post(
-            `${BASE_URL}/api/register`,
-            { username, email, password }
-        );
+        const response: AxiosResponse<
+            | { hasError: boolean; User: User }
+            | { hasError: boolean; message: string }
+        > = await axios.post(`${BASE_URL}/api/register`, {
+            username,
+            email,
+            password,
+        });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        return handleAxiosError(error);
     }
 };
 
@@ -30,12 +38,16 @@ export const signUp = async (
 export const signIn = async (
     email: string | undefined,
     password: string | undefined
-): Promise<User | undefined> => {
+): Promise<
+    | { hasError: boolean; User: User }
+    | { hasError: boolean; message: string }
+    | undefined
+> => {
     try {
-        const response: AxiosResponse<User> = await axios.post(
-            `${BASE_URL}/api/login`,
-            { email, password }
-        );
+        const response: AxiosResponse<
+            | { hasError: boolean; User: User }
+            | { hasError: boolean; message: string }
+        > = await axios.post(`${BASE_URL}/api/login`, { email, password });
         return response.data;
     } catch (error) {
         handleAxiosError(error);

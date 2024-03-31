@@ -1,14 +1,18 @@
+import chalk from "chalk";
 import { Song } from "../models/songs.model";
 import { Request, Response } from "express";
 
 // get all songs
 export const getAllSongs = async (req: Request, res: Response): Promise<void> => {
       try {
-            //  TODO return only first 10 songs
             const songs = await Song.findAll({ limit: 10 });
+            if (!songs) {
+                  console.error(chalk.red("Error fetching songs from database 😓"));
+                  res.status(404).json({ message: "Songs not found!" });
+            }
             res.json(songs);
       } catch (error) {
-            console.error("Error fetching songs: ", error);
+            console.error(chalk.red("Error fetching songs 😓: \n"), error);
             res.status(500).json({ message: "Internal server error" });
       }
 };
@@ -23,7 +27,7 @@ export const getSongByID = async (req: Request, res: Response): Promise<void> =>
             }
             res.json(song);
       } catch (error) {
-            console.error("Error fetching song by ID: ", error);
+            console.error(chalk.red("Error fetching song by ID 😓: \n"), error);
             res.status(500).json({ message: "Internal server error" });
       }
 };

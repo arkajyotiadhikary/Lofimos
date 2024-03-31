@@ -15,13 +15,14 @@ const songs_model_1 = require("./models/songs.model");
 // models
 const songs_model_2 = require("./models/songs.model");
 const users_model_1 = require("./models/users.model");
+// Initialize Sequelize instance
 exports.sequelize = new sequelize_1.Sequelize({
     dialect: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "test123",
-    database: "lofimos",
+    host: process.env.DB_HOST || "localhost",
+    port: parseInt(process.env.DB_PORT || "5432"),
+    username: process.env.DB_USERNAME || "postgres",
+    password: process.env.DB_PASSWORD || "postgres",
+    database: process.env.DB_DATABASE || "postgres",
 });
 exports.songModel = (0, songs_model_2.initSongModel)(exports.sequelize);
 exports.userModel = (0, users_model_1.initUserModel)(exports.sequelize);

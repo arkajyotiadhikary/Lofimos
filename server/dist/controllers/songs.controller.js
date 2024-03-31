@@ -8,18 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteSong = exports.updateSong = exports.createSong = exports.searchSongsByPopularity = exports.searchSongs = exports.getSongByID = exports.getAllSongs = void 0;
+const chalk_1 = __importDefault(require("chalk"));
 const songs_model_1 = require("../models/songs.model");
 // get all songs
 const getAllSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //  TODO return only first 10 songs
         const songs = yield songs_model_1.Song.findAll({ limit: 10 });
+        if (!songs) {
+            console.error(chalk_1.default.red("Error fetching songs from database 😓"));
+            res.status(404).json({ message: "Songs not found!" });
+        }
         res.json(songs);
     }
     catch (error) {
-        console.error("Error fetching songs: ", error);
+        console.error(chalk_1.default.red("Error fetching songs 😓: \n"), error);
         res.status(500).json({ message: "Internal server error" });
     }
 });
@@ -35,7 +42,7 @@ const getSongByID = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.json(song);
     }
     catch (error) {
-        console.error("Error fetching song by ID: ", error);
+        console.error(chalk_1.default.red("Error fetching song by ID 😓: \n"), error);
         res.status(500).json({ message: "Internal server error" });
     }
 });

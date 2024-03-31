@@ -5,7 +5,12 @@ export class User extends Model {
       public username!: string;
       public email!: string;
       public password!: string;
-      public profile_picture?: string;
+      public profilePicture?: string;
+      public isAdmin!: boolean;
+      public role!: string;
+      public accessToken?: string;
+      public refreshToken?: string;
+      public sessionID?: string;
 }
 
 export const initUserModel = (sequelize: Sequelize): void => {
@@ -28,13 +33,32 @@ export const initUserModel = (sequelize: Sequelize): void => {
                         type: DataTypes.STRING,
                         allowNull: false,
                   },
-                  profile_picture: {
+                  profilePicture: {
+                        type: DataTypes.STRING,
+                  },
+                  isAdmin: {
+                        type: DataTypes.BOOLEAN,
+                        allowNull: false,
+                        defaultValue: false,
+                  },
+                  role: {
+                        type: DataTypes.STRING,
+                        allowNull: false,
+                        defaultValue: "user",
+                  },
+                  accessToken: {
+                        type: DataTypes.STRING,
+                  },
+                  refreshToken: {
+                        type: DataTypes.STRING,
+                  },
+                  sessionID: {
                         type: DataTypes.STRING,
                   },
             },
             {
                   sequelize,
-                  tableName: " Users",
+                  tableName: "Users",
             }
       );
       console.log("User model has initiated!");

@@ -16,6 +16,13 @@ export default StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20,
     },
+    logo: {
+        width: 100,
+        height: 100,
+        marginBottom: 30,
+        marginTop: 10,
+        resizeMode: "contain",
+    },
     form: {
         padding: 10,
     },
@@ -39,7 +46,7 @@ export default StyleSheet.create({
     btnHolder: {
         width: "100%",
         alignItems: "center",
-        margin: 5,
+        marginVertical: 20,
     },
     btn: {
         backgroundColor: "black",
