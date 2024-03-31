@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import cors from "cors";
 import env from "dotenv";
+import cookieParser from "cookie-parser";
 
 env.config();
 
@@ -18,6 +19,7 @@ app.set("views", path.join(__dirname, "views"));
 // middleware
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // songs api
 app.use("/api", songs);

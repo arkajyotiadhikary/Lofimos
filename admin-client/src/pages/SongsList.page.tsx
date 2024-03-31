@@ -1,12 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
-import { getAllSongs } from "../services/songService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
-
 import { useNavigate } from "react-router-dom";
-
+import { getAllSongs } from "../services/songService";
 import { Song } from "../types";
 import { useAuth } from "../contexts/AuthContext";
+import Cookies from "js-cookie";
 
 const SongsList: FC = () => {
       const navigate = useNavigate();
@@ -14,20 +13,33 @@ const SongsList: FC = () => {
       const { user } = useAuth();
 
       useEffect(() => {
-            // console.log("user", user);
-            // // Check if the user is verified before fetching songs
-            // if (!user) {
-            //       // Redirect the user to the authentication page if not verified
-            //       navigate("/auth");
-            // } else {
+            const fetchSongs = async () => {
+                  try {
+                        const token = Cookies.get("token");
+                        if (!token) {
+                              navigate("/auth");
+                              return;
+                        }
 
-            // }
-            (async () => setSongs(await getAllSongs()))();
-      }, [user, navigate]);
+                        const songs = await getAllSongs(token);
+                        if (songs.length === 0) {
+                              navigate("/auth");
+                              return;
+                        }
+
+                        setSongs(songs);
+                  } catch (error) {
+                        console.error("Error fetching songs:", error);
+                        navigate("/auth");
+                  }
+            };
+
+            fetchSongs();
+      }, [navigate]);
 
       return (
             <div className="container mx-auto px-10 py-10">
-                  {/* header */}
+                  {/* Header */}
                   <header
                         className="flex justify-between items-center p-10 h-40 bg-center bg-no-repeat bg-cover backdrop-blur-3xl backdrop-brightness-150 md:backdrop-filter-none"
                         style={{
@@ -37,22 +49,21 @@ const SongsList: FC = () => {
                         <h1 className="text-3xl font-bold text-white text-shadow-lg">Songs</h1>
                         <button
                               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-lg"
-                              onClick={() => {
-                                    navigate("/upload");
-                              }}
+                              onClick={() => navigate("/upload")}
                         >
                               <FontAwesomeIcon icon={faEdit} className="mr-2 text-lg" />
                               <span className="tracking-wide">Add Song</span>
                         </button>
                   </header>
 
+                  {/* Songs */}
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                         {songs.map((song) => (
                               <div
                                     key={song.SongID}
                                     className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-200 ease-in-out p-5"
                               >
-                                    {/* image */}
+                                    {/* Image */}
                                     <div className="w-full h-48 relative mt-10">
                                           <img
                                                 className="object-cover w-full h-full rounded-t-lg"
@@ -77,11 +88,11 @@ const SongsList: FC = () => {
                                           </div>
                                     </div>
                                     <div className="mt-5">
-                                          {/* title */}
+                                          {/* Title */}
                                           <p className="text-lg font-bold">{song.Title}</p>
-                                          {/* artist name */}
+                                          {/* Artist name */}
                                           <p className="text-sm">{song.Artist}</p>
-                                          {/* duration */}
+                                          {/* Duration */}
                                           <p className="text-sm">{song.Duration}</p>
                                     </div>
                               </div>

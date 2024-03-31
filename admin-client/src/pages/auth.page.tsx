@@ -25,7 +25,7 @@ const Auth = () => {
                         console.log("signed in auth context", authContext.user);
                         console.log("signed in response", response);
                         authContext.setUser(response);
-                        // navigate("/songs");
+                        navigate("/songs");
                   }
             } catch (error) {
                   console.log(error);

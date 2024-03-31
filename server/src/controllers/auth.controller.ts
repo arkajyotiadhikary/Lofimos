@@ -93,23 +93,18 @@ export const loginUser = async (req: Request, res: Response) => {
             const user = await getUserByEmail(email);
             if (user && bcrypt.compareSync(password, user.password)) {
                   const accessToken = generateAccessToken(user);
-                  const refreshToken = generateRefreshToken(user);
-                  const sessionID = generateSessionID(user);
                   try {
                         const updatedUser = await updateUser(user.userID, {
                               accessToken,
-                              refreshToken,
-                              sessionID,
                         });
                         console.log("Updated user: ", updatedUser);
                   } catch (error) {
                         console.error(error);
                   }
-                  // Set the access token in the response header
-                  res.setHeader("X-Auth-Token", accessToken);
                   res.status(200).json({
                         role: user.role,
                         userVerified: true,
+                        token: accessToken,
                   });
             } else {
                   res.status(401).json({ message: "Invalid credentials" });
