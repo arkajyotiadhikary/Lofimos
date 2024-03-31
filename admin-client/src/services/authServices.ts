@@ -6,10 +6,8 @@ const serverUrl = "http://localhost:2526";
 
 export const signIn = async (userData: UserData): Promise<UserResponseData | undefined> => {
       try {
-            console.log("request sent");
             const response = await axios.post(`${serverUrl}/api/login`, userData);
             if (response) {
-                  console.log("response", response.data);
                   Cookies.set("token", response.data.token);
                   return response.data;
             }
@@ -20,12 +18,10 @@ export const signIn = async (userData: UserData): Promise<UserResponseData | und
 
 export const validateToken = async (token: string): Promise<boolean> => {
       try {
-            const response = await axios.get(`${serverUrl}/api/validate`, {
-                  headers: {
-                        Authorization: token,
-                  },
+            const response = await axios.post(`${serverUrl}/api/validate`, {
+                  token: token,
             });
-            if (response.data.isValid) {
+            if (!response.data.hasError) {
                   return true;
             }
             return false;

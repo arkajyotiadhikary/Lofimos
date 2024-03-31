@@ -22,3 +22,16 @@ export const getAllSongs = async (token: string): Promise<Song[]> => {
             return [];
       }
 };
+
+export const uploadSong = async (formData: Partial<Song>, token: string) => {
+      try {
+            const response = await axios.post("http://localhost:2526/api/upload", formData, {
+                  headers: {
+                        Authorization: token,
+                  },
+            });
+            return response.data;
+      } catch (error) {
+            console.error("Error uploading song:", error);
+      }
+};

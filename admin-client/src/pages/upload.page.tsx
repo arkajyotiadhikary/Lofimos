@@ -1,40 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-
-interface FormData {
-      Title: string;
-      Artist: string;
-      Album?: string;
-      ReleaseYear?: number;
-      Genre?: string;
-      Duration?: string;
-      TrackNumber?: number;
-      AudioFilePath: string;
-      CoverArtPath?: string;
-      ThumbnailPath?: string;
-      Lyrics?: string;
-      Likes: number;
-      Dislikes: number;
-      PlayCount: number;
-      IsFavorite: boolean;
-      Comments?: string;
-      BPM?: number;
-      Key?: string;
-      Mood?: string;
-      SpotifyLink?: string;
-      AppleMusicLink?: string;
-      YouTubeLink?: string;
-      ArtistWebsite?: string;
-      SampleInformation?: string;
-      Credits?: string;
-      CreatedAt: Date;
-}
+import { uploadSong } from "../services/songService";
+import Cookies from "js-cookie";
+import { Song } from "../types";
 
 const Upload: React.FC = () => {
       const navigate = useNavigate();
-      const [formData, setFormData] = useState<FormData>({
+      const [formData, setFormData] = useState<Partial<Song>>({
             Title: "",
             Artist: "",
             Album: "",
@@ -63,9 +37,28 @@ const Upload: React.FC = () => {
             CreatedAt: new Date(),
       });
 
+      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const { name, value } = event.target;
+            setFormData((prev) => ({ ...prev, [name]: value }));
+      };
+
+      const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            try {
+                  console.log("btn pressed", formData);
+                  const response: Partial<Song> | undefined = await uploadSong(
+                        formData,
+                        Cookies.get("token")!
+                  );
+                  if (response) navigate("/songs");
+            } catch (error) {
+                  console.log(error);
+            }
+      };
+
       return (
             <div className="upload flex justify-center p-10">
-                  <form className="space-y-6 w-1/2">
+                  <form className="space-y-6 w-1/2" onSubmit={handleSubmit}>
                         <header
                               className="relative flex flex-col justify-center items-center bg-center bg-no-repeat bg-cover h-40 backdrop-blur-3xl backdrop-brightness-150 md:backdrop-filter-none"
                               style={{
@@ -107,6 +100,7 @@ const Upload: React.FC = () => {
                                           <div className="w-full pl-2">
                                                 <input
                                                       className="form-input block w-full px-3 py-2 transition duration-150 ease-in-out sm:text-sm sm:leading-5 border border-gray-200 rounded-md focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                                      onChange={handleChange}
                                                       id={key}
                                                       name={key}
                                                 />

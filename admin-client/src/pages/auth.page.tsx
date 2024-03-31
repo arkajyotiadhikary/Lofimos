@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { UserData, UserResponseData } from "../types";
 import { signIn } from "../services/authServices";
-import { AuthContext } from "../contexts/AuthContext"; // Import the authentication context
 
 import logo from "../public/logo/wepik-export-20240324130518XYcX.png";
 
@@ -14,17 +13,13 @@ const Auth = () => {
             password: "",
       });
 
-      const authContext = useContext(AuthContext); // Get the authentication context
-
       const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
             try {
                   console.log("btn pressed", userData);
                   const response: UserResponseData | undefined = await signIn(userData);
                   if (response) {
-                        console.log("signed in auth context", authContext.user);
                         console.log("signed in response", response);
-                        authContext.setUser(response);
                         navigate("/songs");
                   }
             } catch (error) {

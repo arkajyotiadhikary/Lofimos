@@ -20,14 +20,14 @@ const generateAccessToken = (user: User): string => {
       });
 };
 
-const generateRefreshToken = (user: User): string => {
-      return jwt.sign({ id: user.userID }, process.env.JWT_SECRETE!, {
-            expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRE,
-      });
-};
-
-const generateSessionID = (user: User): string => {
-      return Math.random().toString(36).slice(2);
+export const validateToken = (req: Request, res: Response) => {
+      const { token } = req.body;
+      try {
+            jwt.verify(token, process.env.JWT_SECRETE!);
+            res.status(200).json({ hasError: false, message: "Token is valid" });
+      } catch (error) {
+            res.status(401).json({ hasError: true, message: "Invalid token" });
+      }
 };
 
 // Middleware to validate the auth header
