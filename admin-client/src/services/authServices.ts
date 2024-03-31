@@ -6,10 +6,8 @@ const serverUrl = "http://localhost:2526";
 
 export const signIn = async (userData: UserData): Promise<UserResponseData | undefined> => {
       try {
-            console.log("request sent");
             const response = await axios.post(`${serverUrl}/api/login`, userData);
             if (response) {
-                  console.log("response", response.data);
                   Cookies.set("token", response.data.token);
                   return response.data;
             }

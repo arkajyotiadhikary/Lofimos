@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
@@ -62,6 +62,13 @@ const Upload: React.FC = () => {
             Credits: "",
             CreatedAt: new Date(),
       });
+
+      // useEffect(() => {
+      //       const token = localStorage.getItem("token");
+      //       if (!token) {
+      //             navigate("/auth");
+      //       }
+      // });
 
       return (
             <div className="upload flex justify-center p-10">

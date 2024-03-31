@@ -1,12 +1,10 @@
 import "./App.css";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function App() {
-      return (
-            <div className="App">
-                  <Outlet />
-            </div>
-      );
+      let auth = { token: true };
+      return auth.token ? <Outlet /> : <Navigate to="/auth" />;
 }
 
 export default App;

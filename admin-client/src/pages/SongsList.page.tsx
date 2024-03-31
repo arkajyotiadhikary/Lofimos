@@ -4,13 +4,11 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { getAllSongs } from "../services/songService";
 import { Song } from "../types";
-import { useAuth } from "../contexts/AuthContext";
 import Cookies from "js-cookie";
 
 const SongsList: FC = () => {
       const navigate = useNavigate();
       const [songs, setSongs] = useState<Song[]>([]);
-      const { user } = useAuth();
 
       useEffect(() => {
             const fetchSongs = async () => {
