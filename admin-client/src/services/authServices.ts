@@ -18,12 +18,10 @@ export const signIn = async (userData: UserData): Promise<UserResponseData | und
 
 export const validateToken = async (token: string): Promise<boolean> => {
       try {
-            const response = await axios.get(`${serverUrl}/api/validate`, {
-                  headers: {
-                        Authorization: token,
-                  },
+            const response = await axios.post(`${serverUrl}/api/validate`, {
+                  token: token,
             });
-            if (response.data.isValid) {
+            if (!response.data.hasError) {
                   return true;
             }
             return false;
