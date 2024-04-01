@@ -102,15 +102,18 @@ export const loginUser = async (req: Request, res: Response) => {
                         console.error(error);
                   }
                   res.status(200).json({
-                        role: user.role,
-                        userVerified: true,
-                        token: accessToken,
+                        hasError: false,
+                        data: {
+                              role: user.role,
+                              userVerified: true,
+                              token: accessToken,
+                        },
                   });
             } else {
-                  res.status(401).json({ message: "Invalid credentials" });
+                  res.status(401).json({ hasError: true, message: "Invalid credentials" });
             }
       } catch (error) {
             console.error(error);
-            res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({ hasError: true, message: "User already exists" });
       }
 };

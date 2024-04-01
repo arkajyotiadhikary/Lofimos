@@ -17,20 +17,21 @@ export const signUp = async (
 ): Promise<
     | { hasError: boolean; User: User }
     | { hasError: boolean; message: string }
-    | unknown
+    | undefined
 > => {
     try {
         const response: AxiosResponse<
             | { hasError: boolean; User: User }
             | { hasError: boolean; message: string }
+            | undefined
         > = await axios.post(`${BASE_URL}/api/register`, {
             username,
             email,
             password,
         });
-        return response.data;
+        return response.data || undefined;
     } catch (error) {
-        return handleAxiosError(error);
+        return handleAxiosError(error) as undefined;
     }
 };
 
@@ -39,18 +40,28 @@ export const signIn = async (
     email: string | undefined,
     password: string | undefined
 ): Promise<
-    | { hasError: boolean; User: User }
+    | {
+          hasError: boolean;
+          data: {
+              role: string;
+              userVerified: boolean;
+              token: string;
+          };
+      }
     | { hasError: boolean; message: string }
     | undefined
 > => {
     try {
         const response: AxiosResponse<
-            | { hasError: boolean; User: User }
+            | {
+                  hasError: boolean;
+                  data: { role: string; userVerified: boolean; token: string };
+              }
             | { hasError: boolean; message: string }
         > = await axios.post(`${BASE_URL}/api/login`, { email, password });
-        return response.data;
+        return response.data || undefined;
     } catch (error) {
-        handleAxiosError(error);
+        return handleAxiosError(error) as undefined;
     }
 };
 
@@ -61,8 +72,8 @@ export const validateUserInput = (
 ): ValidateUserInput => {
     // Validate if the username, email, and password are not empty
     if (
-        !formData.username ||
-        (!formData.email && !isLogIn) ||
+        (!formData.username && !isLogIn) ||
+        !formData.email ||
         !formData.password
     ) {
         return {
@@ -72,11 +83,7 @@ export const validateUserInput = (
     }
 
     // Validate the email if it's provided and it's not a login operation
-    if (
-        !isLogIn &&
-        formData.email &&
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-    ) {
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
         return {
             isValid: false,
             message: "Invalid email address.",
@@ -95,4 +102,19 @@ export const validateUserInput = (
         isValid: true,
         message: "",
     };
+};
+
+export const validateToken = async (token: string): Promise<boolean> => {
+    try {
+        const response = await axios.post(`${BASE_URL}/api/validate`, {
+            token: token,
+        });
+        if (!response.data.hasError) {
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
 };

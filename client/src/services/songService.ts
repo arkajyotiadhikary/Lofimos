@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Song } from "../../types";
 import { handleAxiosError } from "./axiosErrorHandler";
 import { type AddTrack } from "react-native-track-player";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BASE_URL = "http://10.0.2.2:2526";
 
@@ -17,6 +18,7 @@ const calculateDurationInSeconds = (durationString: string | undefined) => {
  * Formate songs as AddTrack .
  * We can only add tracks of type AddTrack in TrackPlayer
  */
+
 const formateSong = (data: Song[]): AddTrack[] => {
     return data.map((song, index) => ({
         url: song.AudioFilePath,
@@ -31,9 +33,16 @@ const formateSong = (data: Song[]): AddTrack[] => {
 
 // Get all tracks
 export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
+    const token = await AsyncStorage.getItem("token");
+    console.log("token", token);
     try {
         const response: AxiosResponse<Song[]> = await axios.get(
-            `${BASE_URL}/api/songs`
+            `${BASE_URL}/api/songs`,
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
         );
         const formatedSong = formateSong(response.data);
         return formatedSong;
