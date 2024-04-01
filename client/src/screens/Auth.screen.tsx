@@ -1,14 +1,22 @@
 import React, { FC, useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import styles from "../styles/Auth.style";
 import logo from "../assests/logo/wepik-export-20240324130518XYcX.png";
 
-import { type User } from "../../types";
+import { RootStackNavigationProp, type User } from "../../types";
 
 import { signUp, signIn, validateUserInput } from "../services/authService";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../features/user/userSlice";
+
 const Auth: FC = () => {
+    const navigation = useNavigation<RootStackNavigationProp>();
+    const dispatch = useDispatch();
+
     // a variable to check is it sign in or sign up form
     const [isSignIn, setIsSignIn] = useState(false);
     // a object to store user data from the input field
@@ -40,22 +48,36 @@ const Auth: FC = () => {
 
     // method to handle submit . Check wheather you are submittin sign in form of sign up form
     const handleSubmit = async (): Promise<void> => {
+        console.log("form data:", formData);
         const validation = validateUserInput(formData, isSignIn);
-        if (validation.isValid) {
-            if (isSignIn) signIn(formData.email, formData.password);
-            else {
-                const response = await signUp(
+        if (!validation.isValid) {
+            setErrorState(validation.message);
+            return;
+        }
+
+        try {
+            let response;
+            if (isSignIn) {
+                response = await signIn(formData.email, formData.password);
+                if (!response?.hasError && "data" in response!) {
+                    await AsyncStorage.setItem("token", response?.data?.token!);
+                    dispatch(setCurrentUser({ isAuthenticated: true }));
+                }
+            } else {
+                response = await signUp(
                     formData.username,
                     formData.email,
                     formData.password
                 );
-                if ("message" in response) {
-                    console.log(response);
-                    setErrorState(response?.message);
-                }
             }
-        } else {
-            setErrorState(validation.message);
+
+            if ("message" in response!) {
+                setErrorState(response.message);
+            }
+            console.log("Response:", response);
+        } catch (error) {
+            setErrorState("An error occurred. Please try again."); // Handle generic error message
+            console.error("Error:", error); // Log the error for debugging
         }
     };
 
@@ -87,17 +109,18 @@ const Auth: FC = () => {
             <View style={styles.form}>
                 <View style={styles.inputHolder}>
                     <TextInput
-                        placeholder="Username"
-                        value={formData.username}
-                        onChangeText={(e) => handleChange("username", e)}
+                        placeholder="Email"
+                        value={formData.email}
+                        onChangeText={(e) => handleChange("email", e)}
                     />
                 </View>
+
                 {!isSignIn && (
                     <View style={styles.inputHolder}>
                         <TextInput
-                            placeholder="Email"
-                            value={formData.email}
-                            onChangeText={(e) => handleChange("email", e)}
+                            placeholder="Username"
+                            value={formData.username}
+                            onChangeText={(e) => handleChange("username", e)}
                         />
                     </View>
                 )}
