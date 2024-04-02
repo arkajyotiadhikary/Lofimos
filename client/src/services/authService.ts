@@ -43,6 +43,8 @@ export const signIn = async (
     | {
           hasError: boolean;
           data: {
+              username: string;
+              email: string;
               role: string;
               userVerified: boolean;
               token: string;
@@ -55,7 +57,13 @@ export const signIn = async (
         const response: AxiosResponse<
             | {
                   hasError: boolean;
-                  data: { role: string; userVerified: boolean; token: string };
+                  data: {
+                      username: string;
+                      email: string;
+                      role: string;
+                      userVerified: boolean;
+                      token: string;
+                  };
               }
             | { hasError: boolean; message: string }
         > = await axios.post(`${BASE_URL}/api/login`, { email, password });

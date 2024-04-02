@@ -1,22 +1,47 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface User {
+interface UserAuth {
     isAuthenticated: boolean;
 }
+interface UserData {
+    username: string;
+    email: string;
+    role: string;
+}
 
-const initUserState: User = {
+const initUserAuthState: UserAuth = {
     isAuthenticated: false,
 };
 
-export const userSlice = createSlice({
-    name: "user",
-    initialState: initUserState,
+const initUserDataState: UserData = {
+    username: "",
+    email: "",
+    role: "",
+};
+
+export const userAuthSlice = createSlice({
+    name: "userAuth",
+    initialState: initUserAuthState,
     reducers: {
-        setCurrentUser(state, action: PayloadAction<User>) {
+        setCurrentUserAuth(state, action: PayloadAction<UserAuth>) {
             state.isAuthenticated = action.payload.isAuthenticated;
         },
     },
 });
 
-export const { setCurrentUser } = userSlice.actions;
-export const userReducer = userSlice.reducer;
+export const userDataSlice = createSlice({
+    name: "userData",
+    initialState: initUserDataState,
+    reducers: {
+        setCurrentUserData(state, action: PayloadAction<UserData>) {
+            state.email = action.payload.email;
+            state.role = action.payload.role;
+            state.username = action.payload.username;
+        },
+    },
+});
+
+export const { setCurrentUserAuth } = userAuthSlice.actions;
+export const { setCurrentUserData } = userDataSlice.actions;
+export const userAuthReducer = userAuthSlice.reducer;
+export const userDataReducer = userDataSlice.reducer;

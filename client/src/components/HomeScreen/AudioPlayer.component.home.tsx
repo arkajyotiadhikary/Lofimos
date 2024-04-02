@@ -32,7 +32,7 @@ const HomeAudioPlayer: FC = () => {
     return (
         <TouchableOpacity
             style={styles.container}
-            onPress={() => navigation.navigate("PlayerScreen")}
+            onPress={() => navigation.navigate("Player")}
         >
             <View>
                 <Image source={artwork} style={styles.musicArt} />

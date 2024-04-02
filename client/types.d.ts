@@ -47,7 +47,7 @@ export type AuthStackNavigatorParamList = {
 export type RootStackParamList = {
     Home: undefined;
     Auth: undefined;
-    PlayerScreen: undefined;
+    Player: undefined;
     Search: undefined;
 };
 
@@ -55,6 +55,6 @@ export type RootStackNavigationProp = NativeStackScreenProps<
     RootStackParamList,
     Home,
     Auth,
-    PlayerScreen,
+    Player,
     Search
 >;
