@@ -104,6 +104,8 @@ export const loginUser = async (req: Request, res: Response) => {
                   res.status(200).json({
                         hasError: false,
                         data: {
+                              username: user.username,
+                              email: user.email,
                               role: user.role,
                               userVerified: true,
                               token: accessToken,

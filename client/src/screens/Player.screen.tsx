@@ -11,7 +11,7 @@ import CoverArt from "../components/PlayerScreen/CoverArt.component.player";
 import TrackDetails from "../components/PlayerScreen/TrackDetails.component.player";
 import AudioController from "../components/PlayerScreen/AudioController.component.player";
 
-const PlayerScreen: FC = () => {
+const Player: FC = () => {
     return (
         <View style={styles.container}>
             <Header />
@@ -24,4 +24,4 @@ const PlayerScreen: FC = () => {
     );
 };
 
-export default PlayerScreen;
+export default Player;

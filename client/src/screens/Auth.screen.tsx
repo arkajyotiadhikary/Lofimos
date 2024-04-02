@@ -11,10 +11,12 @@ import { signUp, signIn, validateUserInput } from "../services/authService";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../features/user/userSlice";
+import {
+    setCurrentUserAuth,
+    setCurrentUserData,
+} from "../features/user/userSlice";
 
 const Auth: FC = () => {
-    const navigation = useNavigation<RootStackNavigationProp>();
     const dispatch = useDispatch();
 
     // a variable to check is it sign in or sign up form
@@ -61,7 +63,20 @@ const Auth: FC = () => {
                 response = await signIn(formData.email, formData.password);
                 if (!response?.hasError && "data" in response!) {
                     await AsyncStorage.setItem("token", response?.data?.token!);
-                    dispatch(setCurrentUser({ isAuthenticated: true }));
+                    console.log(
+                        "Data we are storing in redux store",
+                        response.data
+                    );
+                    dispatch(
+                        setCurrentUserAuth({
+                            isAuthenticated: true,
+                        }),
+                        setCurrentUserData({
+                            username: response?.data?.username!,
+                            email: response?.data?.email!,
+                            role: response?.data?.role!,
+                        })
+                    );
                 }
             } else {
                 response = await signUp(
