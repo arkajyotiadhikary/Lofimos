@@ -135,7 +135,7 @@ const deleteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             res.status(404).json({ message: "Song not found" });
         }
         yield songs_model_1.Song.destroy({ where: { SongID: id } });
-        res.status(204).end();
+        res.status(204).json({ message: "Song deleted successfully" }).end();
     }
     catch (error) {
         console.error("Error deleting song:", error);

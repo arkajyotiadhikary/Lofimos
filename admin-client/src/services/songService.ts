@@ -14,8 +14,6 @@ export const getAllSongs = async (token: string): Promise<Song[]> => {
                   console.error("Request failed with status:", response.status);
                   return [];
             }
-
-            console.log("response", response.data);
             return response.data;
       } catch (error) {
             console.error("Error fetching songs:", error);
@@ -33,5 +31,18 @@ export const uploadSong = async (formData: Partial<Song>, token: string) => {
             return response.data;
       } catch (error) {
             console.error("Error uploading song:", error);
+      }
+};
+
+export const deleteSong = async (id: number, token: string) => {
+      try {
+            const response = await axios.delete(`http://localhost:2526/api/songs/${id}`, {
+                  headers: {
+                        Authorization: token,
+                  },
+            });
+            return response;
+      } catch (error) {
+            console.error("Error deleting song:", error);
       }
 };

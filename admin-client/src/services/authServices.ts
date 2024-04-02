@@ -8,7 +8,7 @@ export const signIn = async (userData: UserData): Promise<UserResponseData | und
       try {
             const response = await axios.post(`${serverUrl}/api/login`, userData);
             if (response) {
-                  Cookies.set("token", response.data.token);
+                  Cookies.set("token", response.data.data.token);
                   return response.data;
             }
       } catch (error) {

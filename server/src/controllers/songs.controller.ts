@@ -111,7 +111,7 @@ export const deleteSong = async (req: Request, res: Response): Promise<void> => 
                   res.status(404).json({ message: "Song not found" });
             }
             await Song.destroy({ where: { SongID: id } });
-            res.status(204).end();
+            res.status(204).json({ message: "Song deleted successfully" }).end();
       } catch (error) {
             console.error("Error deleting song:", error);
             res.status(500).json({ message: "Internal server error" });
