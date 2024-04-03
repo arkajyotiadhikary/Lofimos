@@ -110,14 +110,14 @@ const updateSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { id } = req.params;
     const songData = req.body;
     try {
-        const song = songs_model_1.Song.findByPk(id);
+        const song = yield songs_model_1.Song.findByPk(id);
         if (!song) {
             res.status(404).json({ message: "Song not found" });
         }
         else {
-            yield songs_model_1.Song.update(songData, { where: { SongID: id } });
-            const updatedSong = songs_model_1.Song.findByPk(id);
-            res.json(updatedSong);
+            console.log("Song data for updating the song in db", songData);
+            yield song.update(songData);
+            res.json(song);
         }
     }
     catch (error) {

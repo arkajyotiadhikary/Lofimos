@@ -30,6 +30,10 @@ const SongsList: FC = () => {
             fetchSongs();
       }, [navigate]);
 
+      const handleEdit = (id: number, song: Song) => {
+            navigate(`/edit/${id}`, { state: { id, song } });
+      };
+
       const handleDelete = async (id: number) => {
             try {
                   const response = await deleteSong(id, Cookies.get("token") || "");
@@ -45,6 +49,22 @@ const SongsList: FC = () => {
 
       return (
             <div className="container mx-auto px-10 py-10">
+                  {/* Header */}
+                  <header
+                        className="flex justify-between items-center p-10 h-40 bg-center bg-no-repeat bg-cover backdrop-blur-3xl backdrop-brightness-150 md:backdrop-filter-none"
+                        style={{
+                              backgroundImage: `url(https://img.freepik.com/free-vector/gradient-lo-fi-illustrations_52683-82981.jpg?w=740&t=st=1711708994~exp=1711709594~hmac=2717141f34bec9d8f1cef63ae74ccfa6532e75e943ec505d418984fdd7dcf663)`,
+                        }}
+                  >
+                        <h1 className="text-3xl font-bold text-white text-shadow-lg">Songs</h1>
+                        <button
+                              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-lg"
+                              onClick={() => navigate("/upload")}
+                        >
+                              <FontAwesomeIcon icon={faEdit} className="mr-2 text-lg" />
+                              <span className="tracking-wide">Add Song</span>
+                        </button>
+                  </header>
                   {/* Songs */}
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                         {songs.map((song) => (
@@ -60,7 +80,10 @@ const SongsList: FC = () => {
                                                 alt=""
                                           />
                                           <div className="absolute bottom-0 right-0 mb-2 mr-2">
-                                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                                                <button
+                                                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                                                      onClick={() => handleEdit(song.SongID, song)}
+                                                >
                                                       <FontAwesomeIcon
                                                             icon={faEdit}
                                                             className="mr-2"

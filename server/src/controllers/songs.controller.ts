@@ -88,13 +88,13 @@ export const updateSong = async (req: Request, res: Response): Promise<void> => 
       const { id } = req.params;
       const songData = req.body;
       try {
-            const song = Song.findByPk(id);
+            const song = await Song.findByPk(id);
             if (!song) {
                   res.status(404).json({ message: "Song not found" });
             } else {
-                  await Song.update(songData, { where: { SongID: id } });
-                  const updatedSong = Song.findByPk(id);
-                  res.json(updatedSong);
+                  console.log("Song data for updating the song in db", songData);
+                  await song.update(songData);
+                  res.json(song);
             }
       } catch (error) {
             console.error("Error updating song:", error);
