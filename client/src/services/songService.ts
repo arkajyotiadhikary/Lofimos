@@ -91,13 +91,30 @@ export const registerSongPlay = async (userID: number, songID: number) => {
     }
 };
 
-// TODO song like
 export const songsLike = async (userID: number, songID: number) => {
     try {
         const token = await AsyncStorage.getItem("token");
         const response: AxiosResponse<{ message: string }> = await axios.post(
             `${BASE_URL}/api/songs/like`,
             { userID, songID },
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};
+
+// song dislike
+export const songUnlike = async (userID: number, songID: number) => {
+    try {
+        const token = await AsyncStorage.getItem("token");
+        const response: AxiosResponse<{ message: string }> = await axios.delete(
+            `${BASE_URL}/api/songs/unlike/${userID}/${songID}`,
             {
                 headers: {
                     Authorization: `${token}`,

@@ -4,7 +4,7 @@ import { Entypo } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../../styles/PlayerScreen/TrackDetails.style";
 import { RootState } from "../../store";
-import { songsLike } from "../../services/songService";
+import { songsLike, songUnlike } from "../../services/songService";
 import { setLikedSongs } from "../../features/user/userSlice";
 
 const TrackDetails: FC = () => {
@@ -29,13 +29,26 @@ const TrackDetails: FC = () => {
     const [like, setLike] = useState(false);
 
     const handleLike = async () => {
-        try {
-            await songsLike(userID, songID);
-            setLike(!like);
-            // Update the liked songs list in Redux after successful like
-            dispatch(setLikedSongs([...likedSongs, songID]));
-        } catch (error) {
-            console.error("Error liking song:", error);
+        if (!like) {
+            try {
+                await songsLike(userID, songID);
+                setLike(!like);
+                // Update the liked songs list in Redux after successful like
+                dispatch(setLikedSongs([...likedSongs, songID]));
+            } catch (error) {
+                console.error("Error liking song:", error);
+            }
+        } else {
+            try {
+                await songUnlike(userID, songID);
+                setLike(!like);
+                // Update the liked songs list in Redux after successful like
+                dispatch(
+                    setLikedSongs(likedSongs.filter((id) => id !== songID))
+                );
+            } catch (error) {
+                console.error("Error unliking song:", error);
+            }
         }
     };
 

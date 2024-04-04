@@ -38,7 +38,7 @@ router.delete("/songs/:id", authenticateAdmin, deleteSong);
 // like a song
 router.post("/songs/like", authenticateUser, likeSong);
 // unlike a song
-router.delete("/songs/unlike", authenticateUser, unlikeSong);
+router.delete("/songs/unlike/:userID/:songID", authenticateUser, unlikeSong);
 // store play song
 router.post("/songs/play", authenticateUser, songPlays);
 

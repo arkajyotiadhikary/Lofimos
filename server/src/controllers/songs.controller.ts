@@ -142,7 +142,8 @@ export const likeSong = async (req: Request, res: Response): Promise<void> => {
 export const unlikeSong = async (req: Request, res: Response): Promise<void> => {
       // song id
       // user id
-      const { songID, userID } = req.body;
+      const { userID, songID } = req.params;
+      console.log(chalk.redBright("Unliking song: ", userID, songID));
       try {
             // check existing like
             const existingLike = await UserSongLikes.findOne({ where: { userID, SongID: songID } });

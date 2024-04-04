@@ -169,7 +169,8 @@ exports.likeSong = likeSong;
 const unlikeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // song id
     // user id
-    const { songID, userID } = req.body;
+    const { userID, songID } = req.params;
+    console.log(chalk_1.default.redBright("Unliking song: ", userID, songID));
     try {
         // check existing like
         const existingLike = yield UserSongLikes_Model_1.UserSongLikes.findOne({ where: { userID, SongID: songID } });
