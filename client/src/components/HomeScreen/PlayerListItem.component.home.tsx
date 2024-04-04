@@ -41,7 +41,6 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
     };
 
     return (
-        // TODO move touchalbe opecity inside view
         <TouchableOpacity onPress={handlePress}>
             <View style={styles.item}>
                 <View style={styles.trackDetails}>

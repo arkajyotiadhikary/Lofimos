@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { createUser, getUserByEmail, updateUser } from "./users.controller";
-import { User } from "../models/users.model";
+import { User } from "../models/Users.Model";
 import bcrypt from "bcrypt";
 
 interface DecodedUser extends JwtPayload {
@@ -15,9 +15,13 @@ interface ResponseBody {
 }
 
 const generateAccessToken = (user: User): string => {
-      return jwt.sign({ id: user.userID, role: user.role }, process.env.JWT_SECRETE!, {
-            expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRE,
-      });
+      return jwt.sign(
+            { id: user.userID, role: user.role, username: user.username, email: user.email },
+            process.env.JWT_SECRETE!,
+            {
+                  expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRE,
+            }
+      );
 };
 
 export const validateToken = (req: Request, res: Response) => {
@@ -104,6 +108,7 @@ export const loginUser = async (req: Request, res: Response) => {
                   res.status(200).json({
                         hasError: false,
                         data: {
+                              userID: user.userID,
                               username: user.username,
                               email: user.email,
                               role: user.role,

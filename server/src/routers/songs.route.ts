@@ -6,6 +6,9 @@ import {
       deleteSong,
       searchSongs,
       searchSongsByPopularity,
+      likeSong,
+      unlikeSong,
+      songPlays,
 } from "../controllers/songs.controller";
 import { authenticateAdmin, authenticateUser } from "../controllers/auth.controller";
 
@@ -36,5 +39,12 @@ router.put("/songs/:id", authenticateAdmin, updateSong);
 
 // Route to delete a song
 router.delete("/songs/:id", authenticateAdmin, deleteSong);
+
+// like a song
+router.post("/songs/like", authenticateUser, likeSong);
+// unlike a song
+router.delete("/songs/unlike", authenticateUser, unlikeSong);
+// store play song
+router.post("/songs/play", authenticateUser, songPlays);
 
 export default router;

@@ -53,7 +53,6 @@ export const addTrack = async () => {
         console.log("No songs found in the database");
         return;
     }
-
     // Now songs is guaranteed to be an array
     await TrackPlayer.add(songs);
     await TrackPlayer.setRepeatMode(RepeatMode.Queue);

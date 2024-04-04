@@ -4,6 +4,7 @@ interface UserAuth {
     isAuthenticated: boolean;
 }
 interface UserData {
+    userID: number;
     username: string;
     email: string;
     role: string;
@@ -14,6 +15,7 @@ const initUserAuthState: UserAuth = {
 };
 
 const initUserDataState: UserData = {
+    userID: 0,
     username: "",
     email: "",
     role: "",
@@ -34,6 +36,7 @@ export const userDataSlice = createSlice({
     initialState: initUserDataState,
     reducers: {
         setCurrentUserData(state, action: PayloadAction<UserData>) {
+            state.userID = action.payload.userID;
             state.email = action.payload.email;
             state.role = action.payload.role;
             state.username = action.payload.username;

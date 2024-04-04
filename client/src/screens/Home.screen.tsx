@@ -9,17 +9,22 @@ import PlayerList from "../components/HomeScreen/PlayerList.component.home";
 import SearchBar from "../components/HomeScreen/SearchBar.componenthome";
 import styles from "../styles/HomeScreen/Home.style";
 import { RootState } from "../store";
+import { registerSongPlay } from "../services/songService";
 
 const Home: FC = () => {
     const { audioIndex } = useSelector(
         (state: RootState) => state.currentPlayingReducer
     );
+    const user = useSelector((state: RootState) => state.userDataReducer);
+    const userAuth = useSelector((state: RootState) => state.userAuthReducer);
     const queue = useSelector((state: RootState) => state.songQueueReducer);
     const { initializePlayer } = usePlayerInitialization();
 
     useEffect(() => {
         initializePlayer();
     }, []);
+
+    useEffect(() => {}, [user, userAuth]);
 
     useEffect(() => {
         const loadSelectedTrack = async () => {
@@ -32,6 +37,12 @@ const Home: FC = () => {
             }
         };
         loadSelectedTrack();
+        (async () => {
+            const activeTrack = await TrackPlayer.getActiveTrack();
+            if (activeTrack) {
+                registerSongPlay(user.userID, activeTrack.songId);
+            }
+        })();
     }, [audioIndex]);
 
     return (

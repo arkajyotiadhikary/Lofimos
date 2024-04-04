@@ -20,7 +20,8 @@ const calculateDurationInSeconds = (durationString: string | undefined) => {
  */
 
 const formateSong = (data: Song[]): AddTrack[] => {
-    return data.map((song, index) => ({
+    return data.map((song) => ({
+        songId: song.SongID,
         url: song.AudioFilePath,
         title: song.Title,
         artist: song.Artist,
@@ -59,7 +60,9 @@ export const getSongsByName = async (
     try {
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs/search`,
-            { params: { songName: songName } }
+            {
+                params: { songName: songName },
+            }
         );
         const formatedSong = formateSong(response.data);
         return formatedSong;
@@ -70,8 +73,24 @@ export const getSongsByName = async (
     }
 };
 
-// search songs by mood
-// search songs by time of the day
-// search songs by season.
-// search songs by study, work or chillout.
-// search by popularity.
+// TODO figure out what you will return from this function. You are getting axios response as response
+export const registerSongPlay = async (userID: number, songID: number) => {
+    try {
+        const token = await AsyncStorage.getItem("token");
+        const response: AxiosResponse<{ message: string }> = await axios.post(
+            `${BASE_URL}/api/songs/play`,
+            { userID, songID },
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};
+
+// TODO song like
+export const songsLike = async () => {};

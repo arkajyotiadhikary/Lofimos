@@ -1,6 +1,8 @@
 import chalk from "chalk";
-import { Song } from "../models/songs.model";
+import { Song } from "../models/Songs.Model";
 import { Request, Response } from "express";
+import { UserSongLikes } from "../models/UserSongLikes.Model";
+import { UserSongPlays } from "../models/UserSongPlays.Model";
 
 // get all songs
 export const getAllSongs = async (req: Request, res: Response): Promise<void> => {
@@ -117,3 +119,70 @@ export const deleteSong = async (req: Request, res: Response): Promise<void> => 
             res.status(500).json({ message: "Internal server error" });
       }
 };
+
+// TODO song likes
+// TODO check if the song is liked or not when we load the song in music player. [Efficient way]
+export const likeSong = async (req: Request, res: Response): Promise<void> => {
+      // song id
+      // user id
+      const { songID, userID } = req.body;
+      try {
+            // check existing like
+            const existingLike = await UserSongLikes.findOne({ where: { userID, SongID: songID } });
+            // TODO return something boolean so that we can render btns properly
+            if (existingLike) res.status(400).json({ message: "You have already liked this song" });
+            await UserSongLikes.create({ userID, SongID: songID });
+            res.status(201).json({ message: "Liked successfully" });
+      } catch (error) {
+            console.error("Error liking song: ", error);
+            res.status(500).json({ message: "Internal server error" });
+      }
+};
+
+export const unlikeSong = async (req: Request, res: Response): Promise<void> => {
+      // song id
+      // user id
+      const { songID, userID } = req.body;
+      try {
+            // check existing like
+            const existingLike = await UserSongLikes.findOne({ where: { userID, SongID: songID } });
+            if (!existingLike) res.status(400).json({ message: "You have not liked this song" });
+            await UserSongLikes.destroy({ where: { userID, SongID: songID } });
+            res.status(201).json({ message: "Unliked successfully" });
+      } catch (error) {
+            console.error("Error unliking song: ", error);
+            res.status(500).json({ message: "Internal server error" });
+      }
+};
+
+// total number of likes
+export const getTotalLikes = async (req: Request, res: Response): Promise<void> => {
+      const { songID } = req.params;
+      try {
+            const totalLikes = await UserSongLikes.count({ where: { SongID: songID } });
+            res.json(totalLikes);
+      } catch (error) {
+            console.error("Error getting total likes: ", error);
+            res.status(500).json({ message: "Internal server error" });
+      }
+};
+
+// song plays
+export const songPlays = async (req: Request, res: Response): Promise<void> => {
+      const { userID, songID } = req.body;
+      try {
+            await UserSongPlays.create({ userID, songID });
+            res.status(201).json({ message: "Song played successfully" });
+      } catch (error) {
+            console.error("Error playing song: ", error);
+            res.status(500).json({ message: "Internal server error" });
+      }
+};
+
+// get popular songs
+// export const getPopularSong = async (req: Request, res: Response): Promise<void> => {
+//       const { limit } = req.query;
+//       try {
+
+//       }
+// };

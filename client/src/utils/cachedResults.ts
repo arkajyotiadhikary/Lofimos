@@ -12,6 +12,7 @@ export const loadCachedResult = async (itemName: string) => {
     }
 };
 
+// TODO add all async storage methods here
 export const saveCachedResult = async (itemName: string, value: any) => {
     try {
         await AsyncStorage.setItem(itemName, JSON.stringify(value));

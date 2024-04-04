@@ -10,12 +10,14 @@ import {
 import CustomSlider from "./audio controller/CustomSlider.component.audiocontroller.player";
 import TimeDisplay from "./audio controller/TimeDisplay.component.audiocontroller.player";
 import PlaybackControls from "./audio controller/PlaybackControls.component.audiocontroller.player";
+import { registerSongPlay } from "../../services/songService";
 
 const AudioController = () => {
     const dispatch = useDispatch();
     const { isPlaying } = useSelector(
         (state: RootState) => state.songControlsReducer
     );
+    const { userID } = useSelector((state: RootState) => state.userDataReducer);
     const [sliderValue, setSliderValue] = useState(0);
     const { position, duration } = useProgress();
 
@@ -31,7 +33,10 @@ const AudioController = () => {
 
     const updateCurrentPlayingSong = async () => {
         const activeTrack = await TrackPlayer.getActiveTrack();
+
         if (activeTrack) {
+            console.log("active track", activeTrack);
+
             dispatch(
                 setCurrentPlayingSong({
                     artist: activeTrack.artist || "",

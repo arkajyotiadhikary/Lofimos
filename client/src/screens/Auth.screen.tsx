@@ -15,6 +15,7 @@ import {
     setCurrentUserAuth,
     setCurrentUserData,
 } from "../features/user/userSlice";
+import { saveCachedResult } from "../utils/cachedResults";
 
 const Auth: FC = () => {
     const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Auth: FC = () => {
     const [isSignIn, setIsSignIn] = useState(false);
     // a object to store user data from the input field
     const [formData, setFormData] = useState<Partial<User>>({
+        userID: 0,
         username: "",
         email: "",
         password: "",
@@ -63,20 +65,23 @@ const Auth: FC = () => {
                 response = await signIn(formData.email, formData.password);
                 if (!response?.hasError && "data" in response!) {
                     await AsyncStorage.setItem("token", response?.data?.token!);
-                    console.log(
-                        "Data we are storing in redux store",
-                        response.data
-                    );
                     dispatch(
                         setCurrentUserAuth({
                             isAuthenticated: true,
                         }),
                         setCurrentUserData({
+                            userID: response?.data?.userID!,
                             username: response?.data?.username!,
                             email: response?.data?.email!,
                             role: response?.data?.role!,
                         })
                     );
+                    await saveCachedResult("userData", {
+                        userID: response?.data?.userID!,
+                        username: response?.data?.username!,
+                        email: response?.data?.email!,
+                        role: response?.data?.role!,
+                    });
                 }
             } else {
                 response = await signUp(
