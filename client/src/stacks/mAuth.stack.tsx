@@ -5,6 +5,7 @@ import Home from "../screens/Home.screen";
 import Auth from "../screens/Auth.screen";
 import Player from "../screens/Player.screen";
 import Search from "../screens/Search.screen";
+import UserSettings from "../screens/UserSettings.screen";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -18,6 +19,7 @@ export const AppStack = () => {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Player" component={Player} />
             <Stack.Screen name="Search" component={Search} />
+            <Stack.Screen name="UserSettings" component={UserSettings} />
         </Stack.Navigator>
     );
 };

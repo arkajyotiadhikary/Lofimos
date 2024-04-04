@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
 import {
       getAllSongs,
       createSong,
@@ -25,11 +25,6 @@ router.get("/songs/search", authenticateUser, searchSongs);
 
 // Route to get popular songs
 router.get("/songs/popular", authenticateUser, searchSongsByPopularity);
-
-// Route to render song upload form
-router.get("/upload", (req: Request, res: Response) => {
-      res.render("SongUploadForm.view.ejs");
-});
 
 // Route to handle song upload
 router.post("/upload", authenticateAdmin, createSong);

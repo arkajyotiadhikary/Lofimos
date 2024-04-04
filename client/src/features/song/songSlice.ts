@@ -5,6 +5,7 @@ import logo from "../../../assets/images/Logo.jpg";
 import { type Track } from "react-native-track-player";
 
 interface CurrentPlayingSong {
+    songID: number;
     title: string;
     artist: string;
     artwork: ImageSourcePropType;
@@ -17,6 +18,7 @@ interface SongControls {
 type Queue = Track[];
 
 const initialCurrentPlayingState: CurrentPlayingSong = {
+    songID: -1,
     title: "Test",
     artist: "Test",
     artwork: logo,
@@ -37,6 +39,7 @@ const currentPlayingSlice = createSlice({
             state,
             action: PayloadAction<CurrentPlayingSong>
         ) {
+            state.songID = action.payload.songID;
             state.title = action.payload.title;
             state.artist = action.payload.artist;
             state.artwork = action.payload.artwork;

@@ -7,7 +7,11 @@ import {
     songQueueReducer,
 } from "./features/song/songSlice";
 
-import { userAuthReducer, userDataReducer } from "./features/user/userSlice";
+import {
+    likedSongsReducer,
+    userAuthReducer,
+    userDataReducer,
+} from "./features/user/userSlice";
 
 export const store = configureStore({
     reducer: {
@@ -16,6 +20,7 @@ export const store = configureStore({
         songQueueReducer,
         userAuthReducer,
         userDataReducer,
+        likedSongsReducer,
     },
 });
 

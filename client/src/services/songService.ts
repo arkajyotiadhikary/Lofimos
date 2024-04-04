@@ -35,7 +35,6 @@ const formateSong = (data: Song[]): AddTrack[] => {
 // Get all tracks
 export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
     const token = await AsyncStorage.getItem("token");
-    console.log("token", token);
     try {
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs`,
@@ -93,4 +92,20 @@ export const registerSongPlay = async (userID: number, songID: number) => {
 };
 
 // TODO song like
-export const songsLike = async () => {};
+export const songsLike = async (userID: number, songID: number) => {
+    try {
+        const token = await AsyncStorage.getItem("token");
+        const response: AxiosResponse<{ message: string }> = await axios.post(
+            `${BASE_URL}/api/songs/like`,
+            { userID, songID },
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};

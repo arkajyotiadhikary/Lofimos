@@ -1,7 +1,9 @@
 import { type Request, type Response } from "express";
 import { User } from "../models/Users.Model";
+import { UserSongLikes } from "../models/UserSongLikes.Model";
 
 import bcrypt from "bcrypt";
+import chalk from "chalk";
 
 type RequestBody<T extends {}> = {
       body: T;
@@ -108,5 +110,24 @@ export const deleteUser = async (
       } catch (error) {
             console.error("Error deleting user", error);
             return res.status(500).json({ message: "Internal server error" });
+      }
+};
+
+// get user's liked songs list
+export const getLikedSongs = async (req: Request, res: Response): Promise<void> => {
+      try {
+            const { id } = req.params;
+            const likedSongs = await UserSongLikes.findAll({ where: { userID: id } });
+            if (likedSongs.length === 0) {
+                  res.status(404).json({ message: "User has no liked songs" });
+            } else {
+                  console.log(
+                        chalk.bgBlue(`liked songs by user ${id}`, JSON.stringify(likedSongs))
+                  );
+                  res.json(likedSongs);
+            }
+      } catch (error) {
+            console.error("Error getting liked songs:", error);
+            res.status(500).json({ message: "Internal server error" });
       }
 };

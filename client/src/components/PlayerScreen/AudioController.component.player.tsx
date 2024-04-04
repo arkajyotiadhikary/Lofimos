@@ -10,7 +10,6 @@ import {
 import CustomSlider from "./audio controller/CustomSlider.component.audiocontroller.player";
 import TimeDisplay from "./audio controller/TimeDisplay.component.audiocontroller.player";
 import PlaybackControls from "./audio controller/PlaybackControls.component.audiocontroller.player";
-import { registerSongPlay } from "../../services/songService";
 
 const AudioController = () => {
     const dispatch = useDispatch();
@@ -39,6 +38,7 @@ const AudioController = () => {
 
             dispatch(
                 setCurrentPlayingSong({
+                    songID: activeTrack.songId || -1,
                     artist: activeTrack.artist || "",
                     title: activeTrack.title || "",
                     artwork: { uri: activeTrack.artwork || "" },

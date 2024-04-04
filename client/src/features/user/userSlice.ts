@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+// INTERFACES
 interface UserAuth {
     isAuthenticated: boolean;
 }
@@ -20,6 +21,8 @@ const initUserDataState: UserData = {
     email: "",
     role: "",
 };
+
+const initLikedSongs: number[] = [];
 
 export const userAuthSlice = createSlice({
     name: "userAuth",
@@ -44,7 +47,19 @@ export const userDataSlice = createSlice({
     },
 });
 
+export const likedSongsSlice = createSlice({
+    name: "likedSongs",
+    initialState: initLikedSongs,
+    reducers: {
+        setLikedSongs(state, action: PayloadAction<number[]>) {
+            return action.payload;
+        },
+    },
+});
+
 export const { setCurrentUserAuth } = userAuthSlice.actions;
 export const { setCurrentUserData } = userDataSlice.actions;
+export const { setLikedSongs } = likedSongsSlice.actions;
 export const userAuthReducer = userAuthSlice.reducer;
 export const userDataReducer = userDataSlice.reducer;
+export const likedSongsReducer = likedSongsSlice.reducer;

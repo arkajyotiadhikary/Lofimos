@@ -17,6 +17,7 @@ const PlayerList: FC<PlayListParams> = ({ queue }) => {
                 data={queue}
                 renderItem={({ item, index }) => (
                     <PlayerListItem
+                        songID={item.songId}
                         index={index}
                         title={item.title}
                         artist={item.artist}

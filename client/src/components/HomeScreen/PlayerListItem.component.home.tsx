@@ -13,6 +13,7 @@ import { Foundation } from "@expo/vector-icons";
 import { type Track } from "react-native-track-player";
 
 interface PlayerListItemProps {
+    songID: number;
     index: number;
     title: string | undefined;
     artist: string | undefined;
@@ -22,6 +23,7 @@ interface PlayerListItemProps {
 }
 
 const PlayerListItem: FC<PlayerListItemProps> = ({
+    songID,
     index,
     title,
     artist,
@@ -32,6 +34,7 @@ const PlayerListItem: FC<PlayerListItemProps> = ({
     const handlePress = (): void => {
         dispatch(
             setCurrentPlayingSong({
+                songID: songID,
                 artist: artist ?? "",
                 title: title ?? "",
                 artwork: coverArtPath,
