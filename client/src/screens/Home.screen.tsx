@@ -10,6 +10,7 @@ import SearchBar from "../components/HomeScreen/SearchBar.componenthome";
 import styles from "../styles/HomeScreen/Home.style";
 import { RootState } from "../store";
 import { registerSongPlay } from "../services/songService";
+import RecentlyPlayed from "../components/HomeScreen/RecentlyPlayed.component";
 
 const Home: FC = () => {
     const { audioIndex } = useSelector(
@@ -50,6 +51,11 @@ const Home: FC = () => {
             <HomeHeader />
             <SearchBar />
             <PlayerList queue={queue} />
+            {/* Recently Played */}
+            <RecentlyPlayed />
+            {/* Most Popular */}
+            {/* Liked */}
+            {/* According to the time of the day */}
             <HomeAudioPlayer />
         </View>
     );

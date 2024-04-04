@@ -15,7 +15,7 @@ import { authenticateAdmin, authenticateUser } from "../controllers/auth.control
 const router = Router();
 
 // Route to get all songs
-router.get("/songs", authenticateUser, getAllSongs);
+router.get("/songs/:limit", authenticateUser, getAllSongs);
 
 // Route to get a specific song by ID
 // router.get("/songs/:id", getSongByID);
