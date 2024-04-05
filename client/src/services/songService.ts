@@ -37,7 +37,7 @@ export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
     const token = await AsyncStorage.getItem("token");
     try {
         const response: AxiosResponse<Song[]> = await axios.get(
-            `${BASE_URL}/api/songs/${3}`,
+            `${BASE_URL}/api/songs/${5}`,
             {
                 headers: {
                     Authorization: `${token}`,
