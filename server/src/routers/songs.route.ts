@@ -10,36 +10,30 @@ import {
       unlikeSong,
       songPlays,
 } from "../controllers/songs.controller";
-import { authenticateAdmin } from "../controllers/auth.controller";
+import { authenticateAdmin, authenticateUser } from "../controllers/auth.controller";
 
 const router = Router();
 
+// ** FOR USERS **
 // Route to get all songs
-router.get("/songs/:limit", getAllSongs);
-
-// Route to get a specific song by ID
-// router.get("/songs/:id", getSongByID);
-
+router.get("/songs", authenticateUser, getAllSongs);
 // Route to search songs
-router.get("/songs/search", searchSongs);
-
+router.get("/songs/search", authenticateUser, searchSongs);
 // Route to get popular songs
-router.get("/songs/popular", searchSongsByPopularity);
-
-// Route to handle song upload
-router.post("/upload", createSong);
-
-// Route to update a song
-router.put("/songs/:id", updateSong);
-
-// Route to delete a song
-router.delete("/songs/:id", deleteSong);
-
+router.get("/songs/popular", authenticateUser, searchSongsByPopularity);
 // like a song
-router.post("/songs/like", likeSong);
+router.post("/songs/like", authenticateUser, likeSong);
 // unlike a song
-router.delete("/songs/unlike/:userID/:songID", unlikeSong);
+router.delete("/songs/unlike/:userID/:songID", authenticateUser, unlikeSong);
 // store play song
-router.post("/songs/play", songPlays);
+router.post("/songs/play", authenticateUser, songPlays);
+
+// ** FOR ADMINS **
+// Route to handle song upload
+router.post("/upload", authenticateAdmin, createSong);
+// Route to update a song
+router.put("/songs/:id", authenticateAdmin, updateSong);
+// Route to delete a song
+router.delete("/songs/:id", authenticateAdmin, deleteSong);
 
 export default router;

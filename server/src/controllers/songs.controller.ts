@@ -6,7 +6,8 @@ import { UserSongPlays } from "../models/UserSongPlays.Model";
 
 // get all songs
 export const getAllSongs = async (req: Request, res: Response): Promise<void> => {
-      const { limit } = req.params;
+      const { limit } = req.query;
+      console.log("Limit: ", limit);
       try {
             const songs = await Song.findAll({ limit: Number(limit) });
             if (!songs) {

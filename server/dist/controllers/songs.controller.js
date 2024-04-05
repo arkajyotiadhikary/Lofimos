@@ -19,7 +19,8 @@ const UserSongLikes_Model_1 = require("../models/UserSongLikes.Model");
 const UserSongPlays_Model_1 = require("../models/UserSongPlays.Model");
 // get all songs
 const getAllSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { limit } = req.params;
+    const { limit } = req.query;
+    console.log("Limit: ", limit);
     try {
         const songs = yield Songs_Model_1.Song.findAll({ limit: Number(limit) });
         if (!songs) {
