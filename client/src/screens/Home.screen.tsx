@@ -1,15 +1,19 @@
-import React, { FC, useEffect, useState } from "react";
-import { View } from "react-native";
+import React, { FC, useEffect } from "react";
+import { View, FlatList } from "react-native";
 import { useSelector } from "react-redux";
 import TrackPlayer from "react-native-track-player";
 import usePlayerInitialization from "../utils/playerInitialization";
+
+import styles from "../styles/HomeScreen/Home.style";
+import { RootState } from "../store";
+import { registerSongPlay } from "../services/songService";
+
+// Components
 import HomeHeader from "../components/HomeScreen/Header.component.home";
 import HomeAudioPlayer from "../components/HomeScreen/AudioPlayer.component.home";
 import PlayerList from "../components/HomeScreen/PlayerList.component.home";
 import SearchBar from "../components/HomeScreen/SearchBar.componenthome";
-import styles from "../styles/HomeScreen/Home.style";
-import { RootState } from "../store";
-import { registerSongPlay } from "../services/songService";
+import HorizontalSongList from "../components/HomeScreen/HorizontalSongList.component";
 
 const Home: FC = () => {
     const { audioIndex } = useSelector(
@@ -48,8 +52,47 @@ const Home: FC = () => {
     return (
         <View style={styles.container}>
             <HomeHeader />
-            <SearchBar />
-            <PlayerList queue={queue} />
+            <FlatList
+                data={[
+                    { key: "SearchBar" },
+                    { key: "PlayerList" },
+                    { key: "Recently Played" },
+                    { key: "Summer Vibes" },
+                    { key: "Most Played" },
+                ]}
+                renderItem={({ item }) => {
+                    switch (item.key) {
+                        case "SearchBar":
+                            return <SearchBar />;
+                        case "PlayerList":
+                            return <PlayerList queue={queue} />;
+                        case "Recently Played":
+                            return (
+                                <HorizontalSongList
+                                    headerTitle="Recently Played"
+                                    songs={queue}
+                                />
+                            );
+                        case "Summer Vibes":
+                            return (
+                                <HorizontalSongList
+                                    headerTitle="Summer Vibes"
+                                    songs={queue}
+                                />
+                            );
+                        case "Most Played":
+                            return (
+                                <HorizontalSongList
+                                    headerTitle="Most Played"
+                                    songs={queue}
+                                />
+                            );
+                        default:
+                            return null;
+                    }
+                }}
+                keyExtractor={(item) => item.key}
+            />
             <HomeAudioPlayer />
         </View>
     );

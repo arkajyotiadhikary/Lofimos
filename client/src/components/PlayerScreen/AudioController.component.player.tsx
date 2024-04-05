@@ -16,7 +16,6 @@ const AudioController = () => {
     const { isPlaying } = useSelector(
         (state: RootState) => state.songControlsReducer
     );
-    const { userID } = useSelector((state: RootState) => state.userDataReducer);
     const [sliderValue, setSliderValue] = useState(0);
     const { position, duration } = useProgress();
 

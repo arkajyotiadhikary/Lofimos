@@ -39,6 +39,7 @@ export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs`,
             {
+                params: { limit: "5" },
                 headers: {
                     Authorization: `${token}`,
                 },
@@ -56,11 +57,16 @@ export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
 export const getSongsByName = async (
     songName: string
 ): Promise<AddTrack[] | undefined> => {
+    console.log("get song by name", songName);
     try {
+        const token = await AsyncStorage.getItem("token");
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs/search`,
             {
                 params: { songName: songName },
+                headers: {
+                    Authorization: `${token}`,
+                },
             }
         );
         const formatedSong = formateSong(response.data);
