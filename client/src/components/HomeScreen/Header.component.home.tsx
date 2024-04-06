@@ -12,7 +12,7 @@ import { RootStackNavigationProp } from "../../../types";
 
 const HomeHeader: FC = () => {
     const navigation = useNavigation<RootStackNavigationProp>();
-    const { username } = useSelector(
+    const { username, profilePic } = useSelector(
         (state: RootState) => state.userDataReducer
     );
 
@@ -23,18 +23,23 @@ const HomeHeader: FC = () => {
     }, [username]);
 
     return (
-        <TouchableOpacity
-            onPress={() => navigation.navigate("UserSettings")}
-            style={styles.container}
-        >
-            <View>
-                <Image style={styles.userProfilePic} source={logo} />
-            </View>
-            <View>
-                <Text style={styles.greetings}>{getCurrentTime()}</Text>
-                <Text style={styles.username}>{headerName}</Text>
-            </View>
-        </TouchableOpacity>
+        <View style={styles.container}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate("UserSettings")}
+                style={styles.header}
+            >
+                <View>
+                    <Image
+                        style={styles.userProfilePic}
+                        source={{ uri: profilePic }}
+                    />
+                </View>
+                <View>
+                    <Text style={styles.greetings}>{getCurrentTime()}</Text>
+                    <Text style={styles.username}>{headerName}</Text>
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 };
 

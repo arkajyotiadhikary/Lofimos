@@ -6,6 +6,7 @@ interface UserAuth {
 }
 interface UserData {
     userID: number;
+    profilePic: string;
     username: string;
     email: string;
     role: string;
@@ -16,6 +17,8 @@ const initUserAuthState: UserAuth = {
 };
 
 const initUserDataState: UserData = {
+    profilePic:
+        "https://i1.sndcdn.com/avatars-QS4u2snc2IlBc4K9-SSy7dQ-t500x500.jpg",
     userID: 0,
     username: "",
     email: "",

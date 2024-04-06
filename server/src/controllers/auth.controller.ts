@@ -98,8 +98,10 @@ export const loginUser = async (req: Request, res: Response) => {
             if (user && bcrypt.compareSync(password, user.password)) {
                   const accessToken = generateAccessToken(user);
                   try {
-                        const updatedUser = await updateUser(user.userID, {
-                              accessToken,
+                        const updatedUser = await updateUser(user.userID, password, {
+                              data: {
+                                    accessToken,
+                              },
                         });
                         console.log("Updated user: ", updatedUser);
                   } catch (error) {

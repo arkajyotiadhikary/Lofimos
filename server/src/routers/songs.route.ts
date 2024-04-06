@@ -1,4 +1,5 @@
 import { Router } from "express";
+import rateLimit from "express-rate-limit";
 import {
       getAllSongs,
       createSong,
@@ -13,6 +14,13 @@ import {
 import { authenticateAdmin, authenticateUser } from "../controllers/auth.controller";
 
 const router = Router();
+
+const limiter = rateLimit({
+      windowMs: 15 * 60 * 1000, // 15 minutes
+      max: 100, // limit each IP to 100 requests per windowMs
+      message: "Too many requests from this IP, please try again later",
+});
+router.use(limiter);
 
 // ** FOR USERS **
 // Route to get all songs
