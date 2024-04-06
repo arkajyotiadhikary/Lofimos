@@ -55,4 +55,53 @@ export default StyleSheet.create({
     logoutBtnText: {
         color: "white",
     },
+    // change password
+    modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modal: {
+        borderRadius: 5,
+        backgroundColor: "white",
+        alignSelf: "center",
+        padding: 20,
+        height: 320,
+        width: 350,
+        elevation: 5,
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        alignSelf: "center",
+        marginBottom: 10,
+    },
+
+    modalInputTitle: {
+        fontSize: 14,
+        marginBottom: 5,
+        marginTop: 10,
+    },
+    modalInputContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        padding: 5,
+        marginBottom: 10,
+    },
+    modalInput: {},
+
+    modalBtn: {
+        alignSelf: "center",
+        marginTop: 10,
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 5,
+        backgroundColor: "red",
+    },
+    modalBtnText: {
+        color: "white",
+    },
 });
