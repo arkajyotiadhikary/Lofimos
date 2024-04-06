@@ -1,9 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+// INTERFACES
 interface UserAuth {
     isAuthenticated: boolean;
 }
 interface UserData {
+    userID: number;
+    profilePic: string;
     username: string;
     email: string;
     role: string;
@@ -14,10 +17,15 @@ const initUserAuthState: UserAuth = {
 };
 
 const initUserDataState: UserData = {
+    profilePic:
+        "https://i1.sndcdn.com/avatars-QS4u2snc2IlBc4K9-SSy7dQ-t500x500.jpg",
+    userID: 0,
     username: "",
     email: "",
     role: "",
 };
+
+const initLikedSongs: number[] = [];
 
 export const userAuthSlice = createSlice({
     name: "userAuth",
@@ -34,6 +42,7 @@ export const userDataSlice = createSlice({
     initialState: initUserDataState,
     reducers: {
         setCurrentUserData(state, action: PayloadAction<UserData>) {
+            state.userID = action.payload.userID;
             state.email = action.payload.email;
             state.role = action.payload.role;
             state.username = action.payload.username;
@@ -41,7 +50,19 @@ export const userDataSlice = createSlice({
     },
 });
 
+export const likedSongsSlice = createSlice({
+    name: "likedSongs",
+    initialState: initLikedSongs,
+    reducers: {
+        setLikedSongs(state, action: PayloadAction<number[]>) {
+            return action.payload;
+        },
+    },
+});
+
 export const { setCurrentUserAuth } = userAuthSlice.actions;
 export const { setCurrentUserData } = userDataSlice.actions;
+export const { setLikedSongs } = likedSongsSlice.actions;
 export const userAuthReducer = userAuthSlice.reducer;
 export const userDataReducer = userDataSlice.reducer;
+export const likedSongsReducer = likedSongsSlice.reducer;

@@ -9,6 +9,7 @@ env.config();
 // routes
 import songs from "./routers/songs.route";
 import auth from "./routers/auth.route";
+import users from "./routers/user.route";
 
 const app = express();
 
@@ -21,8 +22,8 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-// songs api
 app.use("/api", songs);
 app.use("/api", auth);
+app.use("/api", users);
 
 export default app;

@@ -20,7 +20,8 @@ const calculateDurationInSeconds = (durationString: string | undefined) => {
  */
 
 const formateSong = (data: Song[]): AddTrack[] => {
-    return data.map((song, index) => ({
+    return data.map((song) => ({
+        songId: song.SongID,
         url: song.AudioFilePath,
         title: song.Title,
         artist: song.Artist,
@@ -34,11 +35,11 @@ const formateSong = (data: Song[]): AddTrack[] => {
 // Get all tracks
 export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
     const token = await AsyncStorage.getItem("token");
-    console.log("token", token);
     try {
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs`,
             {
+                params: { limit: "5" },
                 headers: {
                     Authorization: `${token}`,
                 },
@@ -56,10 +57,17 @@ export const getAllSong = async (): Promise<AddTrack[] | undefined> => {
 export const getSongsByName = async (
     songName: string
 ): Promise<AddTrack[] | undefined> => {
+    console.log("get song by name", songName);
     try {
+        const token = await AsyncStorage.getItem("token");
         const response: AxiosResponse<Song[]> = await axios.get(
             `${BASE_URL}/api/songs/search`,
-            { params: { songName: songName } }
+            {
+                params: { songName: songName },
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
         );
         const formatedSong = formateSong(response.data);
         return formatedSong;
@@ -70,8 +78,57 @@ export const getSongsByName = async (
     }
 };
 
-// search songs by mood
-// search songs by time of the day
-// search songs by season.
-// search songs by study, work or chillout.
-// search by popularity.
+// TODO figure out what you will return from this function. You are getting axios response as response
+export const registerSongPlay = async (userID: number, songID: number) => {
+    try {
+        const token = await AsyncStorage.getItem("token");
+        const response: AxiosResponse<{ message: string }> = await axios.post(
+            `${BASE_URL}/api/songs/play`,
+            { userID, songID },
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};
+
+export const songsLike = async (userID: number, songID: number) => {
+    try {
+        const token = await AsyncStorage.getItem("token");
+        const response: AxiosResponse<{ message: string }> = await axios.post(
+            `${BASE_URL}/api/songs/like`,
+            { userID, songID },
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};
+
+// song dislike
+export const songUnlike = async (userID: number, songID: number) => {
+    try {
+        const token = await AsyncStorage.getItem("token");
+        const response: AxiosResponse<{ message: string }> = await axios.delete(
+            `${BASE_URL}/api/songs/unlike/${userID}/${songID}`,
+            {
+                headers: {
+                    Authorization: `${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};

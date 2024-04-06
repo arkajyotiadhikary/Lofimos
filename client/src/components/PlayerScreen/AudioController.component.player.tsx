@@ -31,9 +31,13 @@ const AudioController = () => {
 
     const updateCurrentPlayingSong = async () => {
         const activeTrack = await TrackPlayer.getActiveTrack();
+
         if (activeTrack) {
+            console.log("active track", activeTrack);
+
             dispatch(
                 setCurrentPlayingSong({
+                    songID: activeTrack.songId || -1,
                     artist: activeTrack.artist || "",
                     title: activeTrack.title || "",
                     artwork: { uri: activeTrack.artwork || "" },

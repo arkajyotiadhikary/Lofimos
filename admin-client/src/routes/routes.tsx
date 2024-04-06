@@ -3,6 +3,7 @@ import App from "../App";
 import Auth from "../pages/Auth.page";
 import Upload from "../pages/Upload.page";
 import SongsList from "../pages/SongsList.page";
+import Edit from "../pages/Edit.page";
 export const Router = createBrowserRouter([
       {
             path: "/",
@@ -15,6 +16,10 @@ export const Router = createBrowserRouter([
                   {
                         path: "/upload",
                         element: <Upload />,
+                  },
+                  {
+                        path: "/edit/:id",
+                        element: <Edit />,
                   },
             ],
       },

@@ -12,13 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSong = exports.updateSong = exports.createSong = exports.searchSongsByPopularity = exports.searchSongs = exports.getSongByID = exports.getAllSongs = void 0;
+exports.songPlays = exports.getTotalLikes = exports.unlikeSong = exports.likeSong = exports.deleteSong = exports.updateSong = exports.createSong = exports.searchSongsByPopularity = exports.searchSongs = exports.getSongByID = exports.getAllSongs = void 0;
 const chalk_1 = __importDefault(require("chalk"));
-const songs_model_1 = require("../models/songs.model");
+const Songs_Model_1 = require("../models/Songs.Model");
+const UserSongLikes_Model_1 = require("../models/UserSongLikes.Model");
+const UserSongPlays_Model_1 = require("../models/UserSongPlays.Model");
 // get all songs
 const getAllSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { limit } = req.query;
+    console.log("Limit: ", limit);
     try {
-        const songs = yield songs_model_1.Song.findAll({ limit: 10 });
+        const songs = yield Songs_Model_1.Song.findAll({ limit: Number(limit) });
         if (!songs) {
             console.error(chalk_1.default.red("Error fetching songs from database 😓"));
             res.status(404).json({ message: "Songs not found!" });
@@ -35,7 +39,7 @@ exports.getAllSongs = getAllSongs;
 const getSongByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const song = yield songs_model_1.Song.findByPk(id);
+        const song = yield Songs_Model_1.Song.findByPk(id);
         if (!song) {
             res.status(404).json({ message: "Song not found!" });
         }
@@ -70,7 +74,7 @@ const searchSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             WhereClause["Activity"] = activity;
         console.log("Where clause: ", WhereClause);
         // get the songs
-        const songs = yield songs_model_1.Song.findAll({ where: WhereClause });
+        const songs = yield Songs_Model_1.Song.findAll({ where: WhereClause });
         res.json(songs);
     }
     catch (error) {
@@ -82,7 +86,7 @@ exports.searchSongs = searchSongs;
 // search songs by popularity
 const searchSongsByPopularity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const songs = yield songs_model_1.Song.findAll({ order: [["PlayCount", "DESC"]] });
+        const songs = yield Songs_Model_1.Song.findAll({ order: [["PlayCount", "DESC"]] });
         res.json(songs);
     }
     catch (error) {
@@ -96,7 +100,7 @@ const createSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     // get song data from body
     const songData = req.body;
     try {
-        const song = yield songs_model_1.Song.create(songData);
+        const song = yield Songs_Model_1.Song.create(songData);
         res.status(201).json(song);
     }
     catch (error) {
@@ -110,14 +114,14 @@ const updateSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { id } = req.params;
     const songData = req.body;
     try {
-        const song = songs_model_1.Song.findByPk(id);
+        const song = yield Songs_Model_1.Song.findByPk(id);
         if (!song) {
             res.status(404).json({ message: "Song not found" });
         }
         else {
-            yield songs_model_1.Song.update(songData, { where: { SongID: id } });
-            const updatedSong = songs_model_1.Song.findByPk(id);
-            res.json(updatedSong);
+            console.log("Song data for updating the song in db", songData);
+            yield song.update(songData);
+            res.json(song);
         }
     }
     catch (error) {
@@ -130,12 +134,12 @@ exports.updateSong = updateSong;
 const deleteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const song = yield songs_model_1.Song.findByPk(id);
+        const song = yield Songs_Model_1.Song.findByPk(id);
         if (!song) {
             res.status(404).json({ message: "Song not found" });
         }
-        yield songs_model_1.Song.destroy({ where: { SongID: id } });
-        res.status(204).end();
+        yield Songs_Model_1.Song.destroy({ where: { SongID: id } });
+        res.status(204).json({ message: "Song deleted successfully" }).end();
     }
     catch (error) {
         console.error("Error deleting song:", error);
@@ -143,3 +147,75 @@ const deleteSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deleteSong = deleteSong;
+// TODO song likes
+// TODO check if the song is liked or not when we load the song in music player. [Efficient way]
+const likeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // song id
+    // user id
+    const { songID, userID } = req.body;
+    try {
+        // check existing like
+        const existingLike = yield UserSongLikes_Model_1.UserSongLikes.findOne({ where: { userID, SongID: songID } });
+        // TODO return something boolean so that we can render btns properly
+        if (existingLike)
+            res.status(400).json({ message: "You have already liked this song" });
+        yield UserSongLikes_Model_1.UserSongLikes.create({ userID, SongID: songID });
+        res.status(201).json({ message: "Liked successfully" });
+    }
+    catch (error) {
+        console.error("Error liking song: ", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.likeSong = likeSong;
+const unlikeSong = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // song id
+    // user id
+    const { userID, songID } = req.params;
+    console.log(chalk_1.default.redBright("Unliking song: ", userID, songID));
+    try {
+        // check existing like
+        const existingLike = yield UserSongLikes_Model_1.UserSongLikes.findOne({ where: { userID, SongID: songID } });
+        if (!existingLike)
+            res.status(400).json({ message: "You have not liked this song" });
+        yield UserSongLikes_Model_1.UserSongLikes.destroy({ where: { userID, SongID: songID } });
+        res.status(201).json({ message: "Unliked successfully" });
+    }
+    catch (error) {
+        console.error("Error unliking song: ", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.unlikeSong = unlikeSong;
+// total number of likes
+const getTotalLikes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { songID } = req.params;
+    try {
+        const totalLikes = yield UserSongLikes_Model_1.UserSongLikes.count({ where: { SongID: songID } });
+        res.json(totalLikes);
+    }
+    catch (error) {
+        console.error("Error getting total likes: ", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.getTotalLikes = getTotalLikes;
+// song plays
+const songPlays = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userID, songID } = req.body;
+    try {
+        yield UserSongPlays_Model_1.UserSongPlays.create({ userID, songID });
+        res.status(201).json({ message: "Song played successfully" });
+    }
+    catch (error) {
+        console.error("Error playing song: ", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+exports.songPlays = songPlays;
+// get popular songs
+// export const getPopularSong = async (req: Request, res: Response): Promise<void> => {
+//       const { limit } = req.query;
+//       try {
+//       }
+// };

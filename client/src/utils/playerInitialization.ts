@@ -33,9 +33,10 @@ const usePlayerInitialization = () => {
     const dispatchCurrentSong = async (): Promise<void> => {
         const currentSong = await TrackPlayer.getActiveTrack();
         if (currentSong) {
-            const { artist = "", title = "", artwork } = currentSong;
+            const { artist = "", title = "", artwork, songId } = currentSong;
             dispatch(
                 setCurrentPlayingSong({
+                    songID: songId,
                     artist,
                     title,
                     artwork: { uri: artwork },

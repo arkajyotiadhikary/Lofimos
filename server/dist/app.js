@@ -12,6 +12,7 @@ dotenv_1.default.config();
 // routes
 const songs_route_1 = __importDefault(require("./routers/songs.route"));
 const auth_route_1 = __importDefault(require("./routers/auth.route"));
+const user_route_1 = __importDefault(require("./routers/user.route"));
 const app = (0, express_1.default)();
 // set ejs for admin pages
 app.set("view engine", "ejs");
@@ -20,7 +21,7 @@ app.set("views", path_1.default.join(__dirname, "views"));
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use((0, cookie_parser_1.default)());
-// songs api
 app.use("/api", songs_route_1.default);
 app.use("/api", auth_route_1.default);
+app.use("/api", user_route_1.default);
 exports.default = app;

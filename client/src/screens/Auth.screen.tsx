@@ -14,7 +14,10 @@ import { useDispatch } from "react-redux";
 import {
     setCurrentUserAuth,
     setCurrentUserData,
+    setLikedSongs,
 } from "../features/user/userSlice";
+import { saveCachedResult } from "../utils/cachedResults";
+import { getLikedSongs } from "../services/userService";
 
 const Auth: FC = () => {
     const dispatch = useDispatch();
@@ -23,6 +26,7 @@ const Auth: FC = () => {
     const [isSignIn, setIsSignIn] = useState(false);
     // a object to store user data from the input field
     const [formData, setFormData] = useState<Partial<User>>({
+        userID: 0,
         username: "",
         email: "",
         password: "",
@@ -59,33 +63,48 @@ const Auth: FC = () => {
 
         try {
             let response;
+            // check if sign in. if sign in then request sign in
             if (isSignIn) {
                 response = await signIn(formData.email, formData.password);
+                // check if you have response
+                // if you have thn store token in cache
+                // get liked songs and store in redux store
+                // store user data in redux store
                 if (!response?.hasError && "data" in response!) {
                     await AsyncStorage.setItem("token", response?.data?.token!);
-                    console.log(
-                        "Data we are storing in redux store",
-                        response.data
-                    );
+
+                    const songs = await getLikedSongs(response?.data?.userID!);
+                    const songIDArray = songs?.map((song) => song.SongID);
                     dispatch(
                         setCurrentUserAuth({
                             isAuthenticated: true,
                         }),
                         setCurrentUserData({
+                            userID: response?.data?.userID!,
                             username: response?.data?.username!,
                             email: response?.data?.email!,
                             role: response?.data?.role!,
-                        })
+                        }),
+                        setLikedSongs(songIDArray || [])
                     );
+
+                    await saveCachedResult("userData", {
+                        userID: response?.data?.userID!,
+                        username: response?.data?.username!,
+                        email: response?.data?.email!,
+                        role: response?.data?.role!,
+                    });
                 }
-            } else {
+            }
+            // else request sign up
+            else {
                 response = await signUp(
                     formData.username,
                     formData.email,
                     formData.password
                 );
             }
-
+            // check if you have any messages from the server. specially user already exist one.
             if ("message" in response!) {
                 setErrorState(response.message);
             }

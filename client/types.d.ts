@@ -49,6 +49,7 @@ export type RootStackParamList = {
     Auth: undefined;
     Player: undefined;
     Search: undefined;
+    UserSettings: undefined;
 };
 
 export type RootStackNavigationProp = NativeStackScreenProps<

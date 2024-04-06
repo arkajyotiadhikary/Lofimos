@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { type User } from "../../types";
 import { handleAxiosError } from "./axiosErrorHandler";
+import chalk from "chalk";
 
 const BASE_URL = "http://10.0.2.2:2526";
 
@@ -43,6 +44,7 @@ export const signIn = async (
     | {
           hasError: boolean;
           data: {
+              userID: number;
               username: string;
               email: string;
               role: string;
@@ -58,6 +60,7 @@ export const signIn = async (
             | {
                   hasError: boolean;
                   data: {
+                      userID: number;
                       username: string;
                       email: string;
                       role: string;
@@ -67,6 +70,7 @@ export const signIn = async (
               }
             | { hasError: boolean; message: string }
         > = await axios.post(`${BASE_URL}/api/login`, { email, password });
+        console.log(chalk.green("User Data from server:", response.data));
         return response.data || undefined;
     } catch (error) {
         return handleAxiosError(error) as undefined;

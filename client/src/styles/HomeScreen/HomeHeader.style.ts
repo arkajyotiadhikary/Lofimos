@@ -3,11 +3,20 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
         backgroundColor: "white",
-        height: "6%",
+        height: "8%",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
         paddingHorizontal: 15,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 10,
+        elevation: 10,
+    },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
     },
     // TODO move the image a bit left so that the face of the girl stays a the center
     userProfilePic: {

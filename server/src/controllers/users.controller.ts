@@ -1,7 +1,9 @@
 import { type Request, type Response } from "express";
-import { User } from "../models/users.model";
+import { User } from "../models/Users.Model";
+import { UserSongLikes } from "../models/UserSongLikes.Model";
 
 import bcrypt from "bcrypt";
+import chalk from "chalk";
 
 type RequestBody<T extends {}> = {
       body: T;
@@ -51,8 +53,6 @@ export const getUserByEmail = async (userEmail: string): Promise<User | null> =>
       }
 };
 
-// TODO verify we have only one user with this email
-// TODO use salt to store passwords
 // create users
 export const createUser = async (userData: Partial<User>): Promise<User | { message: string }> => {
       const { email, password } = userData;
@@ -74,24 +74,34 @@ export const createUser = async (userData: Partial<User>): Promise<User | { mess
 
 // update users
 export const updateUser = async (
-      userId: number,
-      data: Partial<User>
+      userID: number,
+      password: string,
+      userData: {
+            data: Partial<User>;
+      }
 ): Promise<User | { message: string }> => {
       try {
-            const user = await User.findByPk(userId);
-            if (!user) return { message: `No user found with the id ${userId}` };
-            await User.update(data, { where: { userID: userId } });
-            const updatedUser = await User.findByPk(userId);
-            if (updatedUser) {
-                  return updatedUser;
-            } else {
-                  return { message: `No user found with the id ${userId}` };
+            const user = await User.findByPk(userID);
+            if (!user) {
+                  return { message: `No user found with the id ${userID}` };
             }
+
+            // Verify password
+            const isPasswordValid = await bcrypt.compare(password, user.password);
+            if (!isPasswordValid) {
+                  return { message: "Invalid password" };
+            }
+
+            // Update user data
+            console.log("Data to be updated", userData);
+            await user.update(userData.data);
+            return user;
       } catch (error) {
             console.error("Error updating user", error);
-            throw { message: "Internal server error." };
+            return { message: "Internal server error" };
       }
 };
+
 // delete users
 export const deleteUser = async (
       req: Request,
@@ -108,5 +118,24 @@ export const deleteUser = async (
       } catch (error) {
             console.error("Error deleting user", error);
             return res.status(500).json({ message: "Internal server error" });
+      }
+};
+
+// get user's liked songs list
+export const getLikedSongs = async (req: Request, res: Response): Promise<void> => {
+      try {
+            const { id } = req.params;
+            const likedSongs = await UserSongLikes.findAll({ where: { userID: id } });
+            if (likedSongs.length === 0) {
+                  res.status(404).json({ message: "User has no liked songs" });
+            } else {
+                  console.log(
+                        chalk.bgBlue(`liked songs by user ${id}`, JSON.stringify(likedSongs))
+                  );
+                  res.json(likedSongs);
+            }
+      } catch (error) {
+            console.error("Error getting liked songs:", error);
+            res.status(500).json({ message: "Internal server error" });
       }
 };
