@@ -20,9 +20,12 @@ const UserSongPlays_Model_1 = require("../models/UserSongPlays.Model");
 // get all songs
 const getAllSongs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { limit } = req.query;
-    console.log("Limit: ", limit);
     try {
-        const songs = yield Songs_Model_1.Song.findAll({ limit: Number(limit) });
+        let songs;
+        if (limit) {
+            songs = yield Songs_Model_1.Song.findAll({ limit: Number(limit) });
+        }
+        songs = yield Songs_Model_1.Song.findAll();
         if (!songs) {
             console.error(chalk_1.default.red("Error fetching songs from database 😓"));
             res.status(404).json({ message: "Songs not found!" });
