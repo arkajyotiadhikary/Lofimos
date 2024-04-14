@@ -71,19 +71,15 @@ const Router = () => {
                         );
                         dispatch(setCurrentUserData(userData));
 
+                        // TODO find out a better way to set up this
+                        // With user data we are setting up liked song in the redux store
+                        const songs = await getLikedSongs(userData?.userID!);
+                        const songIDArray = songs?.map((song) => song.SongID);
+                        console.log("songs id array", songIDArray);
+                        dispatch(setLikedSongs(songIDArray || []));
+
                         // If authenticated, get user's liked songs and set them up in the Redux store
                     }
-                }
-
-                // if user liked songs in redux store is empty thn only look for it in cache
-                if (!userLikedSongs) {
-                    console.log(
-                        "No liked songs in redux store. Requesting from the server"
-                    );
-                    const songs = await getLikedSongs(userData?.userID!);
-                    const songIDArray = songs?.map((song) => song.SongID);
-                    console.log("songs id array", songIDArray);
-                    dispatch(setLikedSongs(songIDArray || []));
                 }
             }
         })();
