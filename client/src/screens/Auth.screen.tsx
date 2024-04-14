@@ -21,7 +21,7 @@ import { getLikedSongs } from "../services/userService";
 
 const Auth: FC = () => {
     const dispatch = useDispatch();
-
+    const navigation = useNavigation<RootStackNavigationProp>();
     // a variable to check is it sign in or sign up form
     const [isSignIn, setIsSignIn] = useState(false);
     // a object to store user data from the input field
@@ -34,7 +34,7 @@ const Auth: FC = () => {
     // error message
     const [errorState, setErrorState] = useState("");
 
-    // empty the input when isSignin changes
+    // * empty the input when isSignin changes
     useEffect(() => {
         setFormData({
             username: "",
@@ -44,7 +44,7 @@ const Auth: FC = () => {
         setErrorState("");
     }, [isSignIn]);
 
-    // method to handle change in the input field . Assing updated values in the variable
+    // * Method to handle change in the input field . Assing updated values in the variable
     const handleChange = (name: keyof User, value: string): void => {
         setFormData((prevState) => ({
             ...prevState,
@@ -54,7 +54,6 @@ const Auth: FC = () => {
 
     // method to handle submit . Check wheather you are submittin sign in form of sign up form
     const handleSubmit = async (): Promise<void> => {
-        console.log("form data:", formData);
         const validation = validateUserInput(formData, isSignIn);
         if (!validation.isValid) {
             setErrorState(validation.message);
@@ -63,37 +62,45 @@ const Auth: FC = () => {
 
         try {
             let response;
-            // check if sign in. if sign in then request sign in
+            // Check if sign in. if sign in then request sign in
             if (isSignIn) {
+                console.log("Sign in");
                 response = await signIn(formData.email, formData.password);
-                // check if you have response
-                // if you have thn store token in cache
-                // get liked songs and store in redux store
+                // Check if you have response
                 // store user data in redux store
                 if (!response?.hasError && "data" in response!) {
-                    await AsyncStorage.setItem("token", response?.data?.token!);
-
-                    const songs = await getLikedSongs(response?.data?.userID!);
-                    const songIDArray = songs?.map((song) => song.SongID);
                     dispatch(
                         setCurrentUserAuth({
                             isAuthenticated: true,
-                        }),
+                        })
+                    );
+                    console.log("Set up user auth in redux store");
+                    console.log("Sign in response:", response);
+                    // if you have thn store token in cache
+                    await AsyncStorage.setItem("token", response?.data?.token!);
+                    console.log("Set token in cache");
+                    // Set up current user data in redux
+                    dispatch(
                         setCurrentUserData({
                             userID: response?.data?.userID!,
                             username: response?.data?.username!,
                             email: response?.data?.email!,
                             role: response?.data?.role!,
-                        }),
-                        setLikedSongs(songIDArray || [])
+                            profilePic: "",
+                        })
                     );
-
+                    console.log("Set user data in redux store");
+                    // Get liked songs and store in redux store
+                    const songs = await getLikedSongs(response?.data?.userID!);
+                    const songIDArray = songs?.map((song) => song.SongID);
+                    dispatch(setLikedSongs(songIDArray || []));
                     await saveCachedResult("userData", {
                         userID: response?.data?.userID!,
                         username: response?.data?.username!,
                         email: response?.data?.email!,
                         role: response?.data?.role!,
                     });
+                    console.log("Set liked songs in redux store");
                 }
             }
             // else request sign up
