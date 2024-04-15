@@ -12,12 +12,20 @@ import { RootState } from "../store";
 import styles from "../styles/UserSettings.style";
 import { Ionicons } from "@expo/vector-icons";
 
+// modals
+import ChangePassword from "../components/UserSettingsScreen/ChangePassword.modal";
+import { useState } from "react";
+
 const UserSettings = () => {
     const dispatch = useDispatch();
     const { username, profilePic } = useSelector(
         (state: RootState) => state.userDataReducer
     );
     const navigation = useNavigation<RootStackNavigationProp>();
+
+    // state to open and close modals
+    const [modalVisible, setModalVisible] = useState(false);
+
     const handleLogOut = () => {
         (async () => {
             // delete access token from cache
@@ -60,8 +68,15 @@ const UserSettings = () => {
                 <TouchableOpacity style={styles.listBtn}>
                     <Text>Change Username</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.listBtn}>
+                <TouchableOpacity
+                    style={styles.listBtn}
+                    onPress={() => setModalVisible(true)}
+                >
                     <Text>Change Password</Text>
+                    <ChangePassword
+                        modalVisible={modalVisible}
+                        setModalVisible={setModalVisible}
+                    />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.listBtn}>
                     <Text>Delete Account</Text>
