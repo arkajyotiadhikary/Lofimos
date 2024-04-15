@@ -33,8 +33,6 @@ const AudioController = () => {
         const activeTrack = await TrackPlayer.getActiveTrack();
 
         if (activeTrack) {
-            console.log("active track", activeTrack);
-
             dispatch(
                 setCurrentPlayingSong({
                     songID: activeTrack.songId || -1,

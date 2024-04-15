@@ -8,15 +8,15 @@ import { songsLike, songUnlike } from "../../services/songService";
 import { setLikedSongs } from "../../features/user/userSlice";
 
 const TrackDetails: FC = () => {
-    // user id
+    // User id
     const userID = useSelector(
         (state: RootState) => state.userDataReducer.userID
     );
-    // song id
+    // Song id
     const songID = useSelector(
         (state: RootState) => state.currentPlayingReducer.songID
     );
-    // list of liked songs
+    // List of liked songs
     const likedSongs = useSelector(
         (state: RootState) => state.likedSongsReducer
     );
@@ -53,12 +53,16 @@ const TrackDetails: FC = () => {
     };
 
     useEffect(() => {
-        console.log(likedSongs);
         // Check if the song is already liked by the user on component mount
+        // If it is liked by the user set the like button to true
         if (likedSongs.includes(songID)) {
             setLike(true);
         }
-    }, []);
+        // Else set the like button to false
+        else {
+            setLike(false);
+        }
+    }, [songID]);
 
     return (
         <View style={styles.container}>
